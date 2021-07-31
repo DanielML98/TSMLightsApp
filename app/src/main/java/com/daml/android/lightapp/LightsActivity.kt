@@ -3,7 +3,9 @@ package com.daml.android.lightapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.android.volley.Request
+import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 
@@ -47,4 +49,55 @@ class LightsActivity : AppCompatActivity() {
 // Add the request to the RequestQueue.
         queue.add(stringRequest)
     }
+
+
+    // This function changes label text to the returned string in the GET request to the url
+    fun getFromUrl(url: String,label: TextView){
+
+        val label = label
+        //val label : TextView = findViewById(R.id.label)
+
+        val queue = Volley.newRequestQueue(this)
+        val url = url
+        // Request a string response from the provided URL.
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                // Display the first 500 characters of the response string.
+                val strResp = response.toString()
+                //println(strResp)
+                label.text = strResp
+
+            },
+            Response.ErrorListener { println("Error") })
+
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest)
+    }
+
+    // Function to get the initial status
+    fun initialUpdateStatus(view: View){
+
+        // The status obtained will be in the value of labels.text
+        //val label_1 : TextView = findViewById(R.id.label2)
+        //val label_2 : TextView = findViewById(R.id.label3)
+        //val label_3 : TextView = findViewById(R.id.label4)
+        //val label_4 : TextView = findViewById(R.id.label5)
+
+        // Change to the url to obtain status of each bulb
+        val url_get_satus_1 = "https://tsmpjgv9.000webhostapp.com/get.php?status=0&ID=1" //url for bulb_1
+        val url_get_satus_2 = "https://tsmpjgv9.000webhostapp.com/get.php?status=0&ID=2"
+        val url_get_satus_3 = "https://tsmpjgv9.000webhostapp.com/get.php?status=0&ID=1"
+        val url_get_satus_4 = "https://tsmpjgv9.000webhostapp.com/get.php?status=0&ID=2"
+
+        // For each bulb use a label
+        //getFromUrl(url_get_satus_1,label_1)
+        //getFromUrl(url_get_satus_2,label_2)
+        //getFromUrl(url_get_satus_3,label_3)
+        //getFromUrl(url_get_satus_4,label_4)
+
+
+    }
+
 }
