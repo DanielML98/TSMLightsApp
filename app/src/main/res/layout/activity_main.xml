@@ -6,36 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" app:srcCompat="@drawable/foco"
-        android:id="@+id/imageButton2"
+        android:id="@+id/imageButtonFoco"
         android:contentDescription="@string/IB" app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="8dp" android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="8dp" android:layout_marginRight="8dp" android:layout_marginTop="8dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="buttonPressedMain"
+        tools:ignore="UsingOnClickInXml" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" app:srcCompat="@drawable/sos"
-        android:id="@+id/imageButton3" app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+        android:id="@+id/imageButtonSOS" app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp" android:contentDescription="@string/IB2" android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton2"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonFoco"
+        android:onClick="buttonPressedMain"
+        tools:ignore="UsingOnClickInXml" />
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" app:srcCompat="@drawable/ubicacion"
-        android:id="@+id/imageButton4"
+        android:id="@+id/imageButtonUbicacion"
         app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp" android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton3" android:contentDescription="@string/IB3"/>
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonSOS" android:contentDescription="@string/IB3"
+        android:onClick="buttonPressedMain"
+        tools:ignore="UsingOnClickInXml" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
