@@ -31,8 +31,8 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.imageButtonUbicacion -> {
                 //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
-                //val intent = Intent(this, LocationActivity::class.java)
-                //startActivity(intent)
+                val intent = Intent(this, Ubicacion::class.java)
+                startActivity(intent)
             }
         }
     }
