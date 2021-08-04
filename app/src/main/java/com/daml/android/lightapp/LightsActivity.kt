@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
@@ -22,6 +23,7 @@ class LightsActivity : AppCompatActivity() {
     var bulbTwoIsLit = false
     var bulbThreeIsLit = false
     var bulbFourIsLit = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -178,6 +180,18 @@ class LightsActivity : AppCompatActivity() {
         val url_get_satus_2 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
         val url_get_satus_3 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
         val url_get_satus_4 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
+
+        //Variables para la barra de desplazamiento
+        var barraFocoUno: SeekBar = findViewById(R.id.sBfocoUno)
+        var barraFocoDos: SeekBar = findViewById(R.id.sBfocoDos)
+        var barraFocoTres: SeekBar = findViewById(R.id.sBfocoTres)
+        var barraFocoCuatro: SeekBar = findViewById(R.id.sBfocoCuatro)
+
+        //variables para la intensidad
+        var intensidadFocoUno: TextView = findViewById(R.id.txtvIntensidadFocoUno)
+        var intensidadFocoDos: TextView = findViewById(R.id.txtvIntensidadFocoDos)
+        var intensidadFocoTres: TextView = findViewById(R.id.txtvIntensidadFocoTres)
+        var intensidadFocoCuatro: TextView = findViewById(R.id.txtvIntensidadFocoCuatro)
 
         // For each bulb use a label
         getFromUrl(url_get_satus_1,label_1,1)
