@@ -25,9 +25,8 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.imageButtonSOS -> {
-                //Reemplazar SOSActivity por el nombre del archivo .kt de la actividad SOS
-                //val intent = Intent(this, SOSActivity::class.java)
-                //startActivity(intent)
+                val intent = Intent(this, SOSActivity::class.java)
+                startActivity(intent)
             }
             R.id.imageButtonUbicacion -> {
                 //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación

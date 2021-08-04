@@ -125,27 +125,27 @@ class LightsActivity : AppCompatActivity() {
 
                 if(id ==1){
                     strResp = strResp.substring(9,10)
-                    bulbOneStatus = true
+                    var bulbOneStatus = true
                 }
                 else if(id ==2){
                     strResp = strResp.substring(22,23)
-                    bulbTwoStatus = true
+                    var bulbTwoStatus = true
                 }
                 else if(id ==3){
                     strResp = strResp.substring(35,36)
-                    bulbThreeStatus = true
+                    var bulbThreeStatus = true
                 }
                 else if(id ==4){
                     strResp = strResp.substring(48,49)
-                    bulbFourStatus= true
+                    var bulbFourStatus = true
                 }
 
                 println(strResp)
                 label.text = strResp
-                println(bulbOneStatus)
-                println(bulbTwoStatus)
-                println(bulbThreeStatus)
-                println(bulbFourStatus)
+                //println(bulbOneStatus)
+                //println(bulbTwoStatus)
+                //println(bulbThreeStatus)
+                //println(bulbFourStatus)
 
             },
             Response.ErrorListener { println("Error") })
@@ -176,9 +176,9 @@ class LightsActivity : AppCompatActivity() {
         getFromUrl(url_get_satus_3,label_3,3)
         getFromUrl(url_get_satus_4,label_4,4)
 
-        println(bulbOneStatus)
-        println(bulbTwoStatus)
-        println(bulbThreeStatus)
+        //println(bulbOneStatus)
+        //println(bulbTwoStatus)
+        //println(bulbThreeStatus)
 
     }
 
