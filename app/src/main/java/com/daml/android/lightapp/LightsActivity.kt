@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.ImageButton
+import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.Request
@@ -21,6 +22,7 @@ class LightsActivity : AppCompatActivity() {
     var bulbTwoIsLit = false
     var bulbThreeIsLit = false
     var bulbFourIsLit = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,27 +127,27 @@ class LightsActivity : AppCompatActivity() {
 
                 if(id ==1){
                     strResp = strResp.substring(9,10)
-                    bulbOneStatus = true
+                    bulbOneIsLit = true
                 }
                 else if(id ==2){
                     strResp = strResp.substring(22,23)
-                    bulbTwoStatus = true
+                    bulbTwoIsLit = true
                 }
                 else if(id ==3){
                     strResp = strResp.substring(35,36)
-                    bulbThreeStatus = true
+                    bulbThreeIsLit = true
                 }
                 else if(id ==4){
                     strResp = strResp.substring(48,49)
-                    bulbFourStatus= true
+                    bulbFourIsLit= true
                 }
 
                 println(strResp)
                 label.text = strResp
-                println(bulbOneStatus)
-                println(bulbTwoStatus)
-                println(bulbThreeStatus)
-                println(bulbFourStatus)
+                println(bulbOneIsLit)
+                println(bulbTwoIsLit)
+                println(bulbThreeIsLit)
+                println(bulbFourIsLit)
 
             },
             Response.ErrorListener { println("Error") })
@@ -170,15 +172,27 @@ class LightsActivity : AppCompatActivity() {
         val url_get_satus_3 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
         val url_get_satus_4 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
 
+        //Variables para la barra de desplazamiento
+        var barraFocoUno: SeekBar = findViewById(R.id.sBfocoUno)
+        var barraFocoDos: SeekBar = findViewById(R.id.sBfocoDos)
+        var barraFocoTres: SeekBar = findViewById(R.id.sBfocoTres)
+        var barraFocoCuatro: SeekBar = findViewById(R.id.sBfocoCuatro)
+
+        //variables para la intensidad
+        var intensidadFocoUno: TextView = findViewById(R.id.txtvIntensidadFocoUno)
+        var intensidadFocoDos: TextView = findViewById(R.id.txtvIntensidadFocoDos)
+        var intensidadFocoTres: TextView = findViewById(R.id.txtvIntensidadFocoTres)
+        var intensidadFocoCuatro: TextView = findViewById(R.id.txtvIntensidadFocoCuatro)
+
         // For each bulb use a label
         getFromUrl(url_get_satus_1,label_1,1)
         getFromUrl(url_get_satus_2,label_2,2)
         getFromUrl(url_get_satus_3,label_3,3)
         getFromUrl(url_get_satus_4,label_4,4)
 
-        println(bulbOneStatus)
-        println(bulbTwoStatus)
-        println(bulbThreeStatus)
+        println(bulbOneIsLit)
+        println(bulbTwoIsLit)
+        println(bulbThreeIsLit)
 
     }
 
