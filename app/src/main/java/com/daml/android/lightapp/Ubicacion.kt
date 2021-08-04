@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -18,10 +22,19 @@ import com.daml.android.lightapp.databinding.ActivityUbicacionBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.*
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class Ubicacion : AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
     val PERMISSION_ID = 42
+    var permitedDistance = 0.0
+    var userLatitude = 0.0
+    var userLongitude = 0.0
+
+
+
+
 
     // Iniciación tardía del viewBinding
     lateinit var binding : ActivityUbicacionBinding
@@ -48,6 +61,34 @@ class Ubicacion : AppCompatActivity() {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }
 
+    fun pruebaDistancias(view: View){
+        var editLongitude = findViewById(R.id.longitud_input) as EditText
+        var editLatitude = findViewById(R.id.latitud_input) as EditText
+
+        var res = isInLocation(editLatitude.text.toString().toDouble(),editLongitude.text.toString().toDouble())
+
+        println(res)
+
+        Toast.makeText(this,res.toString(),Toast.LENGTH_SHORT).show()
+    }
+
+    // Returns true if actual distance is in range
+    fun isInLocation(latitude:Double,longitude:Double): Boolean{
+        //Distancia del punto actual al punto donde se ubico la casa
+        var distanceFromLocation = sqrt((userLatitude-latitude).pow(2)+(userLongitude-longitude).pow(2))
+
+        return (distanceFromLocation <= permitedDistance)
+    }
+
+    fun setPermitedDistance(view:View){
+        var editTextDistance = findViewById(R.id.km_input) as EditText
+        val label_distance : TextView = findViewById(R.id.detectKM)
+
+        permitedDistance = editTextDistance.text.toString().toDouble()
+        label_distance.text = permitedDistance.toString()
+        println(permitedDistance)
+    }
+
     private fun leerubicacionactual(){
         if (checkPermissions()){
             if (isLocationEnabled()){
@@ -59,6 +100,10 @@ class Ubicacion : AppCompatActivity() {
                         } else {
                             binding.lbllatitud.text = "LATITUD = " + location.latitude.toString()
                             binding.lbllongitud.text = "LONGITUD = " + location.longitude.toString()
+                            userLatitude = location.latitude.toDouble()
+                            userLongitude = location.longitude.toDouble()
+                            println(userLatitude)
+                            println(userLongitude)
 
                         }
                     }
