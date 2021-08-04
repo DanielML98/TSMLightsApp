@@ -17,7 +17,8 @@
         app:layout_constraintStart_toEndOf="@+id/imageButton2"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         android:contentDescription="@string/IBF1"
-        app:srcCompat="@drawable/offbulb" />
+        app:srcCompat="@drawable/offbulb"
+        android:onClick="buttonPressed"/>
 
     <TextView
         android:id="@+id/textView1"
@@ -26,7 +27,7 @@
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:text="Foco 1"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/imageButton1" />
 
@@ -41,7 +42,8 @@
         android:text="@string/IBF2"
         android:contentDescription="@string/IBF2"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:srcCompat="@drawable/offbulb" />
+        app:srcCompat="@drawable/offbulb"
+        android:onClick="buttonPressed"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -50,7 +52,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:text="Foco 2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
 
@@ -61,11 +63,12 @@
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="100dp"
-        app:layout_constraintStart_toEndOf="@+id/imageButton4"
+        app:layout_constraintStart_toEndOf="@+id/imageButton2"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/IBF3"
         android:contentDescription="@string/IBF3"
-        app:srcCompat="@drawable/offbulb" />
+        app:srcCompat="@drawable/offbulb"
+        android:onClick="buttonPressed"/>
 
     <TextView
         android:id="@+id/textView3"
@@ -74,7 +77,7 @@
         android:layout_marginStart="65dp"
         android:layout_marginLeft="65dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:text="Foco 3"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/imageButton3" />
 
@@ -89,7 +92,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/IBF4"
         android:contentDescription="@string/IBF4"
-        app:srcCompat="@drawable/offbulb" />
+        app:srcCompat="@drawable/offbulb"
+        android:onClick="buttonPressed"/>
 
     <TextView
         android:id="@+id/textView4"
@@ -98,7 +102,7 @@
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
-        android:text="TextView"
+        android:text="Foco 4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButton4" />
 </androidx.constraintlayout.widget.ConstraintLayout>
