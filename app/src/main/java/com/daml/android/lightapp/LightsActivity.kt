@@ -1,5 +1,6 @@
 package com.daml.android.lightapp
 
+import android.graphics.drawable.Drawable
 import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -87,8 +88,6 @@ class LightsActivity : AppCompatActivity() {
     /*fun postVolley(bulbNumber: Int) {
         val queue = Volley.newRequestQueue(this)
         val url = "https://appdevops.000webhostapp.com/crud.php"
-
-
         val stringReq : StringRequest =
             object : StringRequest(Method.POST, url,
                 Response.Listener { response ->
@@ -109,7 +108,7 @@ class LightsActivity : AppCompatActivity() {
 
 
     // This function changes label text to the returned string in the GET request to the url
-    fun getFromUrl(url: String,label: TextView,id:Int){
+    fun getFromUrl(url: String,label: ImageButton,id:Int){
 
         val label = label
         //val label : TextView = findViewById(R.id.label)
@@ -122,30 +121,38 @@ class LightsActivity : AppCompatActivity() {
             Response.Listener<String> { response ->
                 // Display the first 500 characters of the response string.
                 var strResp = response.toString()
+                var img: Drawable
 
                 if(id ==1){
                     strResp = strResp.substring(9,10)
-                    var bulbOneStatus = true
+                    bulbOneIsLit = true
+                    //label.setImageResource(R.drawable.onbulb)
                 }
                 else if(id ==2){
                     strResp = strResp.substring(22,23)
-                    var bulbTwoStatus = true
+                    bulbTwoIsLit = true
+                    //label.setImageResource(R.drawable.onbulb)
                 }
                 else if(id ==3){
                     strResp = strResp.substring(35,36)
-                    var bulbThreeStatus = true
+                    bulbThreeIsLit = true
+                    //label.setImageResource(R.drawable.onbulb)
                 }
                 else if(id ==4){
                     strResp = strResp.substring(48,49)
-                    var bulbFourStatus = true
+                    bulbFourIsLit= true
+                    //label.setImageResource(R.drawable.onbulb)
                 }
 
                 println(strResp)
-                label.text = strResp
-                //println(bulbOneStatus)
-                //println(bulbTwoStatus)
-                //println(bulbThreeStatus)
-                //println(bulbFourStatus)
+                if (strResp == "1") {
+                    label.setImageResource(R.drawable.onbulb)
+                }
+                //label.setImageResource(R.drawable.onbulb)
+                println(bulbOneIsLit)
+                println(bulbTwoIsLit)
+                println(bulbThreeIsLit)
+                println(bulbFourIsLit)
 
             },
             Response.ErrorListener { println("Error") })
@@ -159,10 +166,10 @@ class LightsActivity : AppCompatActivity() {
     fun initialUpdateStatus(){
 
         // The status obtained will be in the value of labels.text
-        val label_1 : TextView = findViewById(R.id.textView1)
-        val label_2 : TextView = findViewById(R.id.textView2)
-        val label_3 : TextView = findViewById(R.id.textView3)
-        val label_4 : TextView = findViewById(R.id.textView4)
+        val label_1 : ImageButton = findViewById(R.id.imageButton1)
+        val label_2 : ImageButton = findViewById(R.id.imageButton2)
+        val label_3 : ImageButton = findViewById(R.id.imageButton3)
+        val label_4 : ImageButton = findViewById(R.id.imageButton4)
 
         // Change to the url to obtain status of each bulb
         val url_get_satus_1 = "https://appdevops.000webhostapp.com/ConsultaESP32.php" //url for bulb_1
@@ -176,9 +183,9 @@ class LightsActivity : AppCompatActivity() {
         getFromUrl(url_get_satus_3,label_3,3)
         getFromUrl(url_get_satus_4,label_4,4)
 
-        //println(bulbOneStatus)
-        //println(bulbTwoStatus)
-        //println(bulbThreeStatus)
+        println(bulbOneIsLit)
+        println(bulbTwoIsLit)
+        println(bulbThreeIsLit)
 
     }
 

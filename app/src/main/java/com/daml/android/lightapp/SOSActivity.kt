@@ -2,17 +2,23 @@ package com.daml.android.lightapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.telephony.SmsManager;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
+import android.telephony.SmsManager
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraManager
+import android.os.Build
+import androidx.annotation.RequiresApi
+
 
 class SOSActivity : AppCompatActivity() {
-
+    private lateinit var cameraM: CameraManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_s_o_s)
@@ -27,6 +33,33 @@ class SOSActivity : AppCompatActivity() {
             requestSendSMSPermissions()
         }else{
             sendSMS()
+        }
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            requestCameraPermissions()
+        }else{
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                flashLight()
+            }
+        }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun flashLight() {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            cameraM=getSystemService(Context.CAMERA_SERVICE) as CameraManager
+            val  cameraListId = cameraM.cameraIdList[0]
+            cameraM.setTorchMode(cameraListId,true)
+        }
+    }
+
+    private fun requestCameraPermissions() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CAMERA)){
+            Toast.makeText(this,"Los permisos ya han sido rechazados",Toast.LENGTH_SHORT).show()
+
+        }else{
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),2)
         }
     }
 
@@ -52,7 +85,15 @@ class SOSActivity : AppCompatActivity() {
             }else{
                 Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
             }
-
+        }
+        if(requestCode == 2){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    flashLight()
+                }
+            }else{
+                Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -62,4 +103,5 @@ class SOSActivity : AppCompatActivity() {
         enviarSMS.sendTextMessage("5514919708",null,"Ubicación",null,null)
         Toast.makeText(this,"Mensaje enviado",Toast.LENGTH_SHORT).show()
     }
+
 }
