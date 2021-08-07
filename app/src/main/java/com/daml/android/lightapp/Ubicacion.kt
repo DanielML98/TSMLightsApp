@@ -22,8 +22,7 @@ import com.daml.android.lightapp.databinding.ActivityUbicacionBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.*
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 class Ubicacion : AppCompatActivity() {
     lateinit var mFusedLocationClient: FusedLocationProviderClient
@@ -32,6 +31,9 @@ class Ubicacion : AppCompatActivity() {
     var userLatitude = 0.0
     var userLongitude = 0.0
 
+    var homeLatitude = 0.0
+    var homeLongitude = 0.0
+    var isHome = false
 
 
 
@@ -47,15 +49,23 @@ class Ubicacion : AppCompatActivity() {
         //Preguntar si se tiene permisos.
         if (allPermissionsGrantedGPS()){
             mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+
         } else {
             // Si no hay permisos solicitarlos al usuario.
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_ID)
         }
+        leerubicacionactual()
+
 
         binding.btndetectar.setOnClickListener {
+            //leerubicacionactual()
+            isHome = true
             leerubicacionactual()
         }
     }
+
+
 
     private fun allPermissionsGrantedGPS() = REQUIRED_PERMISSIONS_GPS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
@@ -76,7 +86,9 @@ class Ubicacion : AppCompatActivity() {
     fun isInLocation(latitude:Double,longitude:Double): Boolean{
         //Distancia del punto actual al punto donde se ubico la casa
         var distanceFromLocation = sqrt((userLatitude-latitude).pow(2)+(userLongitude-longitude).pow(2))
-
+        distanceFromLocation  = distanciaM(userLatitude,userLongitude,latitude,longitude)
+        println(permitedDistance)
+        println(distanceFromLocation)
         return (distanceFromLocation <= permitedDistance)
     }
 
@@ -89,7 +101,22 @@ class Ubicacion : AppCompatActivity() {
         println(permitedDistance)
     }
 
+    fun distanciaM(lat1:Double,long1:Double,lat2:Double,long2:Double): Double
+    {
+        val R:Double = 6378000.0 //Radio de la Tierra en m
+        var difLatitud = (lat2-lat1)*3.141592/180
+        var difLongitud = (long2-long1)*3.141592/180
+        //a = a = sin²(Δlat/2) + cos(lat1) · cos(lat2) · sin²(Δlong/2)
+        var a = (sin(difLatitud/2).pow(2))+ cos(lat1)* cos(lat2)*(sin(difLongitud/2).pow(2))
+        //c = 2 · atan2(√a, √(1−a))
+        var c = 2* atan2(sqrt(a), sqrt((1-a)))
+        var d = R*c
+        return d
+    }
+
     private fun leerubicacionactual(){
+        //var pruebaD=distanciaM(18.3506,-99.5380,18.3513,-99.5379)
+        //println(pruebaD)
         if (checkPermissions()){
             if (isLocationEnabled()){
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -98,10 +125,16 @@ class Ubicacion : AppCompatActivity() {
                         if (location == null){
                             requestNewLocationData()
                         } else {
+                            requestNewLocationData()
                             binding.lbllatitud.text = "LATITUD = " + location.latitude.toString()
                             binding.lbllongitud.text = "LONGITUD = " + location.longitude.toString()
                             userLatitude = location.latitude.toDouble()
                             userLongitude = location.longitude.toDouble()
+                            if(isHome){
+                                homeLatitude = location.latitude.toDouble()
+                                homeLongitude = location.longitude.toDouble()
+                                isHome = false
+                            }
                             println(userLatitude)
                             println(userLongitude)
 
