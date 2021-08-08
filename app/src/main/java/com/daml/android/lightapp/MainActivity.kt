@@ -3,19 +3,22 @@ package com.daml.android.lightapp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.SurfaceTexture
+import android.hardware.Camera
 import android.hardware.camera2.CameraManager
 import android.location.Location
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Looper
 import android.telephony.SmsManager
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import java.io.IOException
+
 
 /*import com.android.volley.Request
 import com.android.volley.Response
@@ -27,6 +30,7 @@ import android.content.Context*/
 
 class MainActivity : AppCompatActivity() {
     private lateinit var cameraM: CameraManager
+    lateinit var cameraL: Camera
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     val objetoSOSUbicacion = SOSClass(this)
     var latitud: String = ""
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Function for the 3 ImageButtons in activity_main.xml
-    fun buttonPressedMain (view: View) {
+    fun buttonPressedMain(view: View) {
         when(view.id) {
             R.id.imageButtonFoco -> {
                 val intent = Intent(this, LightsActivity::class.java)
@@ -65,40 +69,59 @@ class MainActivity : AppCompatActivity() {
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
             requestCameraPermissions()
         }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 flashLight()
+            }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
+                flashLightL()
             }
         }
         objetoSOSUbicacion.RequestPermissionLocation()
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    private fun flashLightL() {
+        cameraL = Camera.open()
+        val p: Camera.Parameters = cameraL.getParameters()
+        p.flashMode = Camera.Parameters.FLASH_MODE_TORCH
+        cameraL.setParameters(p)
+
+        try {
+            cameraL.setPreviewTexture(SurfaceTexture(0))
+        } catch (ex: IOException) {
+            Toast.makeText(this, "Error ", Toast.LENGTH_SHORT).show()
+        }
+        cameraL.startPreview()
+
+
+    }
+
+
     private fun flashLight() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cameraM = getSystemService(CAMERA_SERVICE) as CameraManager
             val  cameraListId = cameraM.cameraIdList[0]
-            cameraM.setTorchMode(cameraListId,true)
+            cameraM.setTorchMode(cameraListId, true)
         }
 
-        Toast.makeText(this,"Linterna encendida",Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Linterna encendida", Toast.LENGTH_SHORT).show()
     }
+
 
     private fun requestCameraPermissions() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
-            Toast.makeText(this,"Los permisos ya han sido rechazados",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Los permisos ya han sido rechazados", Toast.LENGTH_SHORT).show()
 
         }else{
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),2)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 2)
         }
     }
 
     private fun requestSendSMSPermissions() {
         if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
-            Toast.makeText(this,"Los permisos ya han sido rechazados",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Los permisos ya han sido rechazados", Toast.LENGTH_SHORT).show()
 
         }else{
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS),1)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), 1)
         }
 
     }
@@ -113,7 +136,7 @@ class MainActivity : AppCompatActivity() {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 sendSMS()
             }else{
-                Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permisos rechazados", Toast.LENGTH_SHORT).show()
             }
         }
         if(requestCode == 2){
@@ -122,7 +145,7 @@ class MainActivity : AppCompatActivity() {
                     flashLight()
                 }
             }else{
-                Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permisos rechazados", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -141,15 +164,21 @@ class MainActivity : AppCompatActivity() {
             println(mensaje)
 
             //Sentencia para enviar mensaje a contacto
-            enviarSMS.sendTextMessage("$numeroUno",null,
-                "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud",null,null)
+            enviarSMS.sendTextMessage(
+                "$numeroUno", null,
+                "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud", null, null
+            )
             //enviarSMS.sendTextMessage("+$numeroDos.toString()",null,
             //mensaje,null,null)
 
             //Mensaje en la aplicación de éxito
-            Toast.makeText(this,"Mensaje enviado a tus dos contactos",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Mensaje enviado a tus dos contactos", Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(this,"Hubo un error, revisa permisos de ubicación y que tengas la ubicación activada",Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Hubo un error, revisa permisos de ubicación y que tengas la ubicación activada",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -164,7 +193,9 @@ class MainActivity : AppCompatActivity() {
                         locationRequest.interval = 0
                         locationRequest.fastestInterval = 0
                         locationRequest.numUpdates = 1
-                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+                        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(
+                            this
+                        )
                         fusedLocationProviderClient!!.requestLocationUpdates(
                             locationRequest, locationCallback, Looper.myLooper()
                         )
