@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera.flash" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
 
     <application
         android:allowBackup="true"
@@ -14,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LightApp">
-        <activity android:name=".SOSActivity"></activity>
         <activity android:name=".LightsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
