@@ -20,16 +20,16 @@ class MainActivity : AppCompatActivity() {
     //Function for the 3 ImageButtons in activity_main.xml
     fun buttonPressedMain (view: View) {
         when(view.id) {
-            R.id.imageButtonFoco -> {
+            R.id.imageButtonfocooff -> {
                 val intent = Intent(this, LightsActivity::class.java)
                 startActivity(intent)
             }
-            R.id.imageButtonSOS -> {
+            R.id.imageButtonemergency -> {
                 //Reemplazar SOSActivity por el nombre del archivo .kt de la actividad SOS
                 //val intent = Intent(this, SOSActivity::class.java)
                 //startActivity(intent)
             }
-            R.id.imageButtonUbicacion -> {
+            R.id.imageButtonpinlocation -> {
                 //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
