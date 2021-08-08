@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
     private fun sendSMS() {
         val enviarSMS= SmsManager.getDefault()
         val numeroUno=5574044562
-        val numeroDos=5548698086
+        val numeroDos=5521754838
 
         //Formato para enviar mensaje SOS
         val enlaceUbicacion ="https://www.google.com.mx/maps/preview"
@@ -133,9 +133,9 @@ class MainActivity : AppCompatActivity() {
         println(mensaje)
 
         //Sentencia para enviar mensaje a contacto
-        enviarSMS.sendTextMessage("+$numeroUno.toString()",null,
+        enviarSMS.sendTextMessage("$numeroUno.toString()",null,
             "SOS, está es mi ubicación: $enlaceUbicacion",null,null)
-        enviarSMS.sendTextMessage("+$numeroDos.toString()",null,
+        enviarSMS.sendTextMessage(numeroDos.toString(),null,
             mensaje,null,null)
 
         //Mensaje en la aplicación de éxito
