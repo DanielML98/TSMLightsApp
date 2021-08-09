@@ -224,7 +224,7 @@ class MainActivity : AppCompatActivity() {
 
             //Sentencia para enviar mensaje a contacto
             enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1,null,null)
-            enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1_1,null,null)
+            //enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1_1,null,null)
             enviarSMS.sendTextMessage(numeroDos.toString(),null, mensaje2,null,null)
 
             //Mensaje en la aplicación de éxito
