@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import java.io.IOException
 
-
 /*import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -91,27 +90,6 @@ class MainActivity : AppCompatActivity() {
             getLastLocation()
         }
 
-        /*
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            requestCameraPermissions()
-        }else{
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                flashLight()
-            }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
-                flashLightL()
-            }
-        }
-        if(!objetoSOSUbicacion.checkSOSLocPermission()){
-            requestLocationPermissions()
-        }
-        else{
-            Toast.makeText(this, "Haciendo cosas raras de ubicación", Toast.LENGTH_SHORT).show()
-        }
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
-            requestSendSMSPermissions()
-        }else{
-            Toast.makeText(this, "Haciendo cosas raras de SMS", Toast.LENGTH_SHORT).show()
-        }*/
     }
 
     private fun flashLightL() {
@@ -126,8 +104,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Error ", Toast.LENGTH_SHORT).show()
         }
         cameraL.startPreview()
-
-
     }
 
 
@@ -138,7 +114,6 @@ class MainActivity : AppCompatActivity() {
             val  cameraListId = cameraM.cameraIdList[0]
             cameraM.setTorchMode(cameraListId, true)
         }
-
     }
 
     private fun alertCameraPermissions() {
@@ -191,32 +166,7 @@ class MainActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        /*
-        if(requestCode == 1){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                //sendSMS()
-                Toast.makeText(this,"Aceptaste permiso SMS",Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this,"Permisos rechazados SMS",Toast.LENGTH_SHORT).show()
-            }
-        }
-        if(requestCode == 2){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this,"Permisos aceptado Camara",Toast.LENGTH_SHORT).show()
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    flashLight()
-                }
-            }else{
-                Toast.makeText(this,"Permisos rechazados Camara",Toast.LENGTH_SHORT).show()
-            }
-        }
-        if(requestCode == 3){
-            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Toast.makeText(this,"Aceptaste permiso Ubicacion",Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(this,"Permisos rechazados Ubicacion",Toast.LENGTH_SHORT).show()
-            }
-        }*/
+
         if(requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS){
             if(grantResults.isNotEmpty()){
                 var algunPermisoDenegado = false
@@ -258,27 +208,28 @@ class MainActivity : AppCompatActivity() {
     //Función para enviar SMS, esta debe ser llamada después de obtener la ubicación
     private fun sendSMS() {
         val enviarSMS= SmsManager.getDefault()
-        val numeroUno=5548698086
-        val numeroDos=5548698086
+        val numeroUno=5521754838
+        val numeroDos=5574044562
 
         //Formato para enviar mensaje SOS
         val enlaceUbicacion ="https://www.google.com.mx/maps/search/?api=1&query="
 
         if(latitud != "" && longitud != ""){
-            val mensaje =
-                "Eres mi contacto de emergencia, ¡ayuda!, esta es mi ubicacion:\n\n$enlaceUbicacion$latitud,$longitud\n\nLatitud: $latitud\nLongitud: $longitud"
-            println(mensaje)
+            val mensaje1 =
+                "Eres mi contacto de emergencia, ayuda, esta es mi ubicacion:\n$enlaceUbicacion$latitud,$longitud"
+            val mensaje1_1= "Mis coordenadas:\n\nLatitud: $latitud \nLongitud: $longitud"
+
+            val mensaje2= "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud"
+            println(mensaje1)
 
             //Sentencia para enviar mensaje a contacto
-            enviarSMS.sendTextMessage(
-                "$numeroUno",null,
-                "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud",null,null
-            )
-            //enviarSMS.sendTextMessage("$numeroDos",null,
-            //mensaje,null,null)
+            enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1,null,null)
+            enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1_1,null,null)
+            enviarSMS.sendTextMessage(numeroDos.toString(),null, mensaje2,null,null)
 
             //Mensaje en la aplicación de éxito
             Toast.makeText(this,"Mensaje enviado a tus dos contactos",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"Lampara encendida",Toast.LENGTH_SHORT).show()
         }else{
             Toast.makeText(
                 this,
@@ -287,6 +238,7 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
     }
+
 
     //Función para obtener ubicación
     fun getLastLocation(){
