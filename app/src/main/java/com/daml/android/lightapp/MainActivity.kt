@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.imageButtonSOS -> {
                 checkPermissions()
-
             }
             R.id.imageButtonUbicacion -> {
                 //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
@@ -57,6 +56,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkPermissions() {
+        if(!objetoSOSUbicacion.checkSOSLocPermission()){
+            objetoSOSUbicacion.RequestPermissionLocation()
+        }
+        else{
+            Toast.makeText(this, "Haciendo cosas raras de ubicación", Toast.LENGTH_SHORT).show()
+        }
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
             requestSendSMSPermissions()
         }else{
@@ -69,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 flashLight()
             }
         }
-        objetoSOSUbicacion.RequestPermissionLocation()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -113,7 +117,7 @@ class MainActivity : AppCompatActivity() {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 sendSMS()
             }else{
-                Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Permisos rechazados SMS",Toast.LENGTH_SHORT).show()
             }
         }
         if(requestCode == 2){
@@ -122,14 +126,28 @@ class MainActivity : AppCompatActivity() {
                     flashLight()
                 }
             }else{
-                Toast.makeText(this,"Permisos rechazados",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Permisos rechazados Camara",Toast.LENGTH_SHORT).show()
+            }
+        }
+        if(requestCode == 28){
+            if(grantResults.isNotEmpty() &&
+                (grantResults[0] == PackageManager.PERMISSION_GRANTED || grantResults[1] == PackageManager.PERMISSION_GRANTED)){
+                Toast.makeText(this, "Ubicacion aceptada", Toast.LENGTH_SHORT).show()
+            }else{
+                if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)){
+                    Toast.makeText(this,"Has rechazado el permiso de ubicación",Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(this,"Has rechazado el permiso de ubicación permanentemente",Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun sendSMS() {
         val enviarSMS= SmsManager.getDefault()
-        val numeroUno=5571959003
+        val numeroUno=5548698086
         val numeroDos=5548698086
 
         //Formato para enviar mensaje SOS
@@ -143,7 +161,7 @@ class MainActivity : AppCompatActivity() {
             //Sentencia para enviar mensaje a contacto
             enviarSMS.sendTextMessage("$numeroUno",null,
                 "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud",null,null)
-            //enviarSMS.sendTextMessage("+$numeroDos.toString()",null,
+            //enviarSMS.sendTextMessage("$numeroDos.toString()",null,
             //mensaje,null,null)
 
             //Mensaje en la aplicación de éxito
@@ -154,7 +172,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getLastLocation(){
-        if(objetoSOSUbicacion.checkPermission()){
+        if(objetoSOSUbicacion.checkSOSLocPermission()){
             if(objetoSOSUbicacion.isLocationEnable()) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     var location: Location? = task.result

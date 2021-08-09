@@ -13,7 +13,7 @@ class SOSClass (context: Activity){
     //Clase encargada de solicitar permisos de ubicación para SOS, se podrá editar o quitar luego
 
     //Función que revisa si a la app se le han dado permisos para ubicación
-    fun checkPermission(): Boolean {
+    fun checkSOSLocPermission(): Boolean {
         if(ActivityCompat.checkSelfPermission(contextM, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
             ||ActivityCompat.checkSelfPermission(contextM, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
