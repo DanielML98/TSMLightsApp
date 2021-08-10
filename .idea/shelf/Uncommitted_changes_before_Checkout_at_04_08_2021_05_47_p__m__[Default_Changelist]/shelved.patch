@@ -1,0 +1,105 @@
+Index: app/src/main/java/com/daml/android/lightapp/LightsActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.daml.android.lightapp\r\n\r\nimport android.media.Image\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport android.view.Gravity\r\nimport android.view.View\r\nimport android.widget.ImageButton\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport com.android.volley.Request\r\nimport com.android.volley.Response\r\nimport com.android.volley.toolbox.StringRequest\r\nimport com.android.volley.toolbox.Volley\r\nimport java.nio.charset.Charset\r\n\r\nclass LightsActivity : AppCompatActivity() {\r\n\r\n    var bulbOneIsLit = false\r\n    var bulbTwoIsLit = false\r\n    var bulbThreeIsLit = false\r\n    var bulbFourIsLit = false\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_lights)\r\n        initialUpdateStatus()\r\n    }\r\n\r\n    //This is the onClick listener for the three light buttons\r\n    fun buttonPressed (view: View) {\r\n        when(view.id) {\r\n            R.id.imageButton1 -> changeStatus(1, bulbOneIsLit, view)\r\n            R.id.imageButton2 -> changeStatus(2, bulbTwoIsLit, view)\r\n            R.id.imageButton3 -> changeStatus(3, bulbThreeIsLit, view)\r\n            R.id.imageButton4 -> changeStatus(4, bulbFourIsLit, view)\r\n        }\r\n    }\r\n\r\n    fun changeStatus(bulbNumber: Int, isLit: Boolean, button: View): Boolean{\r\n        val queue = Volley.newRequestQueue(this)\r\n        val url = \"https://appdevops.000webhostapp.com/crud.php\"\r\n        val state = if (isLit) 0 else 1\r\n        val image = if (isLit) R.drawable.offbulb else R.drawable.onbulb\r\n        val b = findViewById<ImageButton>(button.id)\r\n        val requestBody = \"id=${bulbNumber}\" + \"&editar=1\" + \"&intensidad=80\" + \"&estado=${state}\"\r\n        var success = false\r\n\r\n        val stringRequest : StringRequest =\r\n            object : StringRequest(Method.POST, url,\r\n                Response.Listener { response ->\r\n                    // response\r\n                    var strResp = response.toString()\r\n                    Log.d(\"API\", strResp)\r\n                    b.setImageResource(image)\r\n                    toggleBulb(b)\r\n                    success = true\r\n                },\r\n                Response.ErrorListener { error ->\r\n                    Log.e(\"API\", \"error => $error\")\r\n                    var correctToast = Toast.makeText(this, R.string.db_error, Toast.LENGTH_SHORT)\r\n                    correctToast.setGravity(Gravity.TOP,0,0)\r\n                    correctToast.show()\r\n                }\r\n            ){\r\n                override fun getBody(): ByteArray {\r\n                    return requestBody.toByteArray(Charset.defaultCharset())\r\n                }\r\n            }\r\n\r\n// Add the request to the RequestQueue.\r\n        queue.add(stringRequest)\r\n        return success\r\n    }\r\n\r\n    fun toggleBulb(bulb: ImageButton) {\r\n        when(bulb.id) {\r\n            R.id.imageButton1 -> bulbOneIsLit = !bulbOneIsLit\r\n            R.id.imageButton2 -> bulbTwoIsLit = !bulbTwoIsLit\r\n            R.id.imageButton3 -> bulbThreeIsLit = !bulbThreeIsLit\r\n            R.id.imageButton4 -> bulbFourIsLit = !bulbFourIsLit\r\n        }\r\n    }\r\n\r\n\r\n    /*fun postVolley(bulbNumber: Int) {\r\n        val queue = Volley.newRequestQueue(this)\r\n        val url = \"https://appdevops.000webhostapp.com/crud.php\"\r\n\r\n\r\n        val stringReq : StringRequest =\r\n            object : StringRequest(Method.POST, url,\r\n                Response.Listener { response ->\r\n                    // response\r\n                    var strResp = response.toString()\r\n                    Log.d(\"API\", strResp)\r\n                },\r\n                Response.ErrorListener { error ->\r\n                    Log.d(\"API\", \"error => $error\")\r\n                }\r\n            ){\r\n                override fun getBody(): ByteArray {\r\n                    return requestBody.toByteArray(Charset.defaultCharset())\r\n                }\r\n            }\r\n        queue.add(stringReq)\r\n    }*/\r\n\r\n\r\n    // This function changes label text to the returned string in the GET request to the url\r\n    fun getFromUrl(url: String,label: TextView,id:Int){\r\n\r\n        val label = label\r\n        //val label : TextView = findViewById(R.id.label)\r\n\r\n        val queue = Volley.newRequestQueue(this)\r\n        val url = url\r\n        // Request a string response from the provided URL.\r\n        val stringRequest = StringRequest(\r\n            Request.Method.GET, url,\r\n            Response.Listener<String> { response ->\r\n                // Display the first 500 characters of the response string.\r\n                var strResp = response.toString()\r\n\r\n                if(id ==1){\r\n                    strResp = strResp.substring(9,10)\r\n                    bulbOneStatus = true\r\n                }\r\n                else if(id ==2){\r\n                    strResp = strResp.substring(22,23)\r\n                    bulbTwoStatus = true\r\n                }\r\n                else if(id ==3){\r\n                    strResp = strResp.substring(35,36)\r\n                    bulbThreeStatus = true\r\n                }\r\n                else if(id ==4){\r\n                    strResp = strResp.substring(48,49)\r\n                    bulbFourStatus= true\r\n                }\r\n\r\n                println(strResp)\r\n                label.text = strResp\r\n                println(bulbOneStatus)\r\n                println(bulbTwoStatus)\r\n                println(bulbThreeStatus)\r\n                println(bulbFourStatus)\r\n\r\n            },\r\n            Response.ErrorListener { println(\"Error\") })\r\n\r\n\r\n        // Add the request to the RequestQueue.\r\n        queue.add(stringRequest)\r\n    }\r\n\r\n    // Function to get the initial status\r\n    fun initialUpdateStatus(){\r\n\r\n        // The status obtained will be in the value of labels.text\r\n        val label_1 : TextView = findViewById(R.id.textView1)\r\n        val label_2 : TextView = findViewById(R.id.textView2)\r\n        val label_3 : TextView = findViewById(R.id.textView3)\r\n        val label_4 : TextView = findViewById(R.id.textView4)\r\n\r\n        // Change to the url to obtain status of each bulb\r\n        val url_get_satus_1 = \"https://appdevops.000webhostapp.com/ConsultaESP32.php\" //url for bulb_1\r\n        val url_get_satus_2 = \"https://appdevops.000webhostapp.com/ConsultaESP32.php\"\r\n        val url_get_satus_3 = \"https://appdevops.000webhostapp.com/ConsultaESP32.php\"\r\n        val url_get_satus_4 = \"https://appdevops.000webhostapp.com/ConsultaESP32.php\"\r\n\r\n        // For each bulb use a label\r\n        getFromUrl(url_get_satus_1,label_1,1)\r\n        getFromUrl(url_get_satus_2,label_2,2)\r\n        getFromUrl(url_get_satus_3,label_3,3)\r\n        getFromUrl(url_get_satus_4,label_4,4)\r\n\r\n        println(bulbOneStatus)\r\n        println(bulbTwoStatus)\r\n        println(bulbThreeStatus)\r\n\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/daml/android/lightapp/LightsActivity.kt b/app/src/main/java/com/daml/android/lightapp/LightsActivity.kt
+--- a/app/src/main/java/com/daml/android/lightapp/LightsActivity.kt	(revision 6f70a32f0ec8cc780211c8e625439f197a25738a)
++++ b/app/src/main/java/com/daml/android/lightapp/LightsActivity.kt	(date 1628117134433)
+@@ -125,27 +125,27 @@
+ 
+                 if(id ==1){
+                     strResp = strResp.substring(9,10)
+-                    bulbOneStatus = true
++                    bulbOneIsLit = true
+                 }
+                 else if(id ==2){
+                     strResp = strResp.substring(22,23)
+-                    bulbTwoStatus = true
++                    bulbTwoIsLit = true
+                 }
+                 else if(id ==3){
+                     strResp = strResp.substring(35,36)
+-                    bulbThreeStatus = true
++                    bulbThreeIsLit = true
+                 }
+                 else if(id ==4){
+                     strResp = strResp.substring(48,49)
+-                    bulbFourStatus= true
++                    bulbFourIsLit= true
+                 }
+ 
+                 println(strResp)
+                 label.text = strResp
+-                println(bulbOneStatus)
+-                println(bulbTwoStatus)
+-                println(bulbThreeStatus)
+-                println(bulbFourStatus)
++                println(bulbOneIsLit)
++                println(bulbTwoIsLit)
++                println(bulbThreeIsLit)
++                println(bulbFourIsLit)
+ 
+             },
+             Response.ErrorListener { println("Error") })
+@@ -168,7 +168,7 @@
+         val url_get_satus_1 = "https://appdevops.000webhostapp.com/ConsultaESP32.php" //url for bulb_1
+         val url_get_satus_2 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
+         val url_get_satus_3 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
+-        val url_get_satus_4 = "https://appdevops.000webhostapp.com/ConsultaESP32.php"
++        val url_get_satus_4 = "https://appdevops.000webhostapp.com/ConsultaESP32.ph p"
+ 
+         // For each bulb use a label
+         getFromUrl(url_get_satus_1,label_1,1)
+@@ -176,9 +176,9 @@
+         getFromUrl(url_get_satus_3,label_3,3)
+         getFromUrl(url_get_satus_4,label_4,4)
+ 
+-        println(bulbOneStatus)
+-        println(bulbTwoStatus)
+-        println(bulbThreeStatus)
++        println(bulbOneIsLit)
++        println(bulbTwoIsLit)
++        println(bulbThreeIsLit)
+ 
+     }
+ 
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <ImageButton\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\" app:srcCompat=\"@drawable/foco\"\r\n        android:id=\"@+id/imageButtonFoco\"\r\n        android:contentDescription=\"@string/IB\" app:layout_constraintStart_toStartOf=\"parent\"\r\n        android:layout_marginLeft=\"8dp\" android:layout_marginStart=\"8dp\" app:layout_constraintEnd_toEndOf=\"parent\"\r\n        android:layout_marginEnd=\"8dp\" android:layout_marginRight=\"8dp\" android:layout_marginTop=\"8dp\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        android:onClick=\"buttonPressedMain\"\r\n        tools:ignore=\"UsingOnClickInXml\" />\r\n    <ImageButton\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\" app:srcCompat=\"@drawable/sos\"\r\n        android:id=\"@+id/imageButtonSOS\" app:layout_constraintStart_toStartOf=\"parent\" android:layout_marginLeft=\"8dp\"\r\n        android:layout_marginStart=\"8dp\" app:layout_constraintEnd_toEndOf=\"parent\" android:layout_marginEnd=\"8dp\"\r\n        android:layout_marginRight=\"8dp\" android:contentDescription=\"@string/IB2\" android:layout_marginTop=\"8dp\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/imageButtonFoco\"\r\n        android:onClick=\"buttonPressedMain\"\r\n        tools:ignore=\"UsingOnClickInXml\" />\r\n    <ImageButton\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\" app:srcCompat=\"@drawable/ubicacion\"\r\n        android:id=\"@+id/imageButtonUbicacion\"\r\n        app:layout_constraintStart_toStartOf=\"parent\" android:layout_marginLeft=\"8dp\"\r\n        android:layout_marginStart=\"8dp\" app:layout_constraintEnd_toEndOf=\"parent\" android:layout_marginEnd=\"8dp\"\r\n        android:layout_marginRight=\"8dp\" android:layout_marginTop=\"8dp\"\r\n        app:layout_constraintTop_toBottomOf=\"@+id/imageButtonSOS\" android:contentDescription=\"@string/IB3\"\r\n        android:onClick=\"buttonPressedMain\"\r\n        tools:ignore=\"UsingOnClickInXml\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 6f70a32f0ec8cc780211c8e625439f197a25738a)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1628117134421)
+@@ -4,6 +4,7 @@
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
++
+     tools:context=".MainActivity">
+ 
+     <ImageButton
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"Android Studio java home\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 6f70a32f0ec8cc780211c8e625439f197a25738a)
++++ b/.idea/gradle.xml	(date 1628113225923)
+@@ -4,7 +4,7 @@
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+-        <option name="testRunner" value="PLATFORM" />
++        <option name="testRunner" value="GRADLE" />
+         <option name="distributionType" value="DEFAULT_WRAPPED" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="gradleJvm" value="Android Studio java home" />
