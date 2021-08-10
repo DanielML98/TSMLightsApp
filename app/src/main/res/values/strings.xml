@@ -8,5 +8,6 @@
     <string name="IBF2">Cocina</string>
     <string name="IBF3">Cuarto</string>
     <string name="IBF4">Baño</string>
+    <string name="db_error">Seems like there\'s an error, try again later</string>
 
 </resources>
