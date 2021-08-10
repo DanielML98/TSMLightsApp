@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
 import java.io.IOException
 
 /*import com.android.volley.Request
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
             }
+
         }
     }
 

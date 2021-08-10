@@ -11,13 +11,13 @@
         android:id="@+id/txtVnombreApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Casa Inteligente"
         android:layout_gravity="center"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="40dp"
+        android:text="Casa Inteligente"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"/>
+        android:textSize="34sp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,22 +29,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+
             <ImageButton
                 android:id="@+id/imageButtonFoco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="147dp"
+                android:layout_height="145dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/IB"
                 android:onClick="buttonPressedMain"
+                android:padding="20dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/foco"
+                app:layout_constraintTop-toTopOf="parent"
+
+                app:srcCompat="@drawable/focooff"
                 tools:ignore="UsingOnClickInXml" />
 
             <TextView
@@ -59,21 +64,26 @@
 
             <ImageButton
                 android:id="@+id/imageButtonSOS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="199dp"
+                android:layout_height="179dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/IB2"
                 android:onClick="buttonPressedMain"
+                android:padding="20dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageButtonFoco"
-                app:srcCompat="@drawable/sos"
-                tools:ignore="UsingOnClickInXml" />
+                app:srcCompat="@drawable/signalalarm"
+                tools:ignore="UsingOnClickInXml"
+
+                />
 
             <TextView
                 android:id="@+id/txtVSOS"
@@ -87,20 +97,23 @@
 
             <ImageButton
                 android:id="@+id/imageButtonUbicacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="139dp"
+                android:layout_height="143dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:adjustViewBounds="true"
                 android:contentDescription="@string/IB3"
                 android:onClick="buttonPressedMain"
+                android:padding="20dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageButtonSOS"
-                app:srcCompat="@drawable/ubicacion"
+                app:srcCompat="@drawable/pinlocation"
                 tools:ignore="UsingOnClickInXml" />
 
             <TextView
