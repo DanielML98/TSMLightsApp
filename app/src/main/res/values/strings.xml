@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">LightApp</string>
-    <string name="IB">foco</string>
-    <string name="IB2">SOS</string>
-    <string name="IB3">Ubicación</string>
+    <string name="IB">bulbs</string>
+    <string name="IB2">emergency</string>
+    <string name="IB3">location</string>
 
     <string name="IBF1">Sala</string>
     <string name="IBF2">Cocina</string>
