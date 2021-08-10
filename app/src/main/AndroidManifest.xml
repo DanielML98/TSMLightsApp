@@ -18,6 +18,9 @@
         <activity
             android:name=".Ubicacion"
             android:exported="true" />
+        <activity
+            android:name=".ubi2"
+            android:exported="true" />
         <activity android:name=".LightsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

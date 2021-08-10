@@ -87,24 +87,22 @@ class ubi2 : AppCompatActivity() {
                         haveHome = true
                         homeLatitude = location.latitude.toDouble()
                         homeLongitude = location.longitude.toDouble()
-                        outOfHome=false
+                        outOfHome = false
                         isHome = false
                         println("Setting home")
                     }
                     println("User loc")
                     println(userLatitude)
                     println(userLongitude)
-                    if(haveHome){
-                        var res = isInLocation(userLatitude,userLongitude)
+                    if(haveHome) {
+                        var res = isInLocation(userLatitude, userLongitude)
                         outOfHome = res
-                        println("En rango?")
+                        print("Prendiendo focos :" )
                         println(outOfHome)
-                        Toast.makeText(this@ubi2,res.toString(),Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ubi2, res.toString(), Toast.LENGTH_SHORT).show()
 
                         if (outOfHome) prenderFocos()
                     }
-
-
                 }
             }
         }
@@ -121,22 +119,14 @@ class ubi2 : AppCompatActivity() {
     // Funcion que se activa al salir del rango permitido
     fun prenderFocos(){
         println("Prendiendo focos!!")
+
+
+
     }
 
 
     fun setHome(view: View){
         isHome =true
-    }
-
-    fun pruebaDistancias(view: View){
-        var editLongitude = findViewById(R.id.longitud_input) as EditText
-        var editLatitude = findViewById(R.id.latitud_input) as EditText
-
-        var res = isInLocation(editLatitude.text.toString().toDouble(),editLongitude.text.toString().toDouble())
-
-        println(res)
-
-        Toast.makeText(this,res.toString(),Toast.LENGTH_SHORT).show()
     }
 
     fun isInLocation(latitude:Double,longitude:Double): Boolean{
@@ -171,7 +161,6 @@ class ubi2 : AppCompatActivity() {
         return d
     }
 
-
     //--------------------------------------------------------------------------
     // Functions for location
     private fun fetchLastLocation() {
@@ -192,7 +181,6 @@ class ubi2 : AppCompatActivity() {
                 return
             }
         }
-
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener(

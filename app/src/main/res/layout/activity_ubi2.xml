@@ -17,23 +17,17 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:text="Accediendo a la ubicación" />
-
-    <TextView
-        android:id="@+id/lbllatitud"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="TextView" />
+        android:text="Ubicación" />
 
     <TextView
         android:id="@+id/lbllongitud"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="18dp"
         android:layout_marginBottom="30dp"
-        android:text="TextView" />
+        android:text="Establecer ubicación actual como casa" />
 
     <Button
         android:id="@+id/btndetectar"
@@ -42,7 +36,8 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
-        android:text="Detectar"
+        android:text="Establecer"
+        android:layout_marginBottom="20dp"
         android:onClick="setHome"/>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -53,7 +48,7 @@
             android:id="@+id/km_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="KM" />
+            android:hint="Metros" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,36 +64,7 @@
         android:id="@+id/detectKM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/longitud_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Prueba longitud" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/latitud_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Prueba latitud" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <Button
-        android:id="@+id/buttonPrueba"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Prueba"
+        android:text="Distancia establecida"
         />
 
 </LinearLayout>
