@@ -5,40 +5,24 @@ import android.os.Bundle
 import android.util.Log
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnSuccessListener
-
 import android.content.pm.PackageManager
-
 import android.os.Build
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import androidx.core.app.ActivityCompat
-
-import androidx.annotation.NonNull
 import com.google.android.gms.location.LocationRequest
 import android.content.Intent
-
 import android.widget.Toast
-
 import android.content.DialogInterface
-
-import android.content.IntentSender
 import android.content.IntentSender.SendIntentException
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.Nullable
-
 import com.google.android.gms.common.api.ResolvableApiException
-
 import com.google.android.gms.tasks.OnFailureListener
-
 import com.google.android.gms.location.LocationSettingsResponse
-
 import com.google.android.gms.location.LocationServices
-
-import com.google.android.gms.location.SettingsClient
-
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.tasks.Task
 import kotlin.math.*
@@ -98,10 +82,10 @@ class ubi2 : AppCompatActivity() {
                         var res = isInLocation(userLatitude, userLongitude)
                         outOfHome = res
                         print("Prendiendo focos :" )
-                        println(outOfHome)
+                        println(!outOfHome)
                         Toast.makeText(this@ubi2, res.toString(), Toast.LENGTH_SHORT).show()
 
-                        if (outOfHome) prenderFocos()
+                        if (!outOfHome) prenderFocos()
                     }
                 }
             }

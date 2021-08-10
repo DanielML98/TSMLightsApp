@@ -16,9 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LightApp">
         <activity
-            android:name=".Ubicacion"
-            android:exported="true" />
-        <activity
             android:name=".ubi2"
             android:exported="true" />
         <activity android:name=".LightsActivity" />
