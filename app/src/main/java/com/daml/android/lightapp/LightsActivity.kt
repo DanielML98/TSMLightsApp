@@ -88,8 +88,6 @@ class LightsActivity : AppCompatActivity() {
     /*fun postVolley(bulbNumber: Int) {
         val queue = Volley.newRequestQueue(this)
         val url = "https://appdevops.000webhostapp.com/crud.php"
-
-
         val stringReq : StringRequest =
             object : StringRequest(Method.POST, url,
                 Response.Listener { response ->
