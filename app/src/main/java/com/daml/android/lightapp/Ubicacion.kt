@@ -15,16 +15,23 @@ import android.content.Intent
 import android.widget.Toast
 import android.content.DialogInterface
 import android.content.IntentSender.SendIntentException
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.Nullable
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.location.LocationSettingsResponse
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.tasks.Task
+import java.nio.charset.Charset
 import kotlin.math.*
 
 
@@ -36,6 +43,7 @@ lateinit var builder: LocationSettingsRequest.Builder
 var REQUEST_CHECK_SETTINGS = 102
 
 //ref https://stackoverflow.com/questions/41500765/how-can-i-get-continuous-location-updates-in-android-like-in-google-maps
+
 class ubi2 : AppCompatActivity() {
     var permitedDistance = 0.0
 
@@ -49,6 +57,8 @@ class ubi2 : AppCompatActivity() {
     var outOfHome = false //Cambia a true cuando esta fuera del rango
 
     var haveHome = false //true si ya se coloco localizacion de la casa
+
+    var focosApagados= false //Variable auxiliar en el control de las peticiones mandadas a la base
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,10 +92,22 @@ class ubi2 : AppCompatActivity() {
                         var res = isInLocation(userLatitude, userLongitude)
                         outOfHome = res
                         print("Prendiendo focos :" )
-                        println(!outOfHome)
+                        println(outOfHome)
                         Toast.makeText(this@ubi2, res.toString(), Toast.LENGTH_SHORT).show()
 
-                        if (!outOfHome) prenderFocos()
+                        if (outOfHome) prenderFocos()
+
+                        if (!outOfHome) focosApagados = true
+
+                        //Función que apaga y prende los focos en la base de datos
+                        //Con la variable focosEncendidos se evita que se manden demasiadas peticiones a la base
+
+                        if(outOfHome && focosApagados) {
+                            for(num in 1..4){
+                                changeStatusOnOff(num,outOfHome)
+                            }
+                            focosApagados = false
+                        }
                     }
                 }
             }
@@ -126,7 +148,7 @@ class ubi2 : AppCompatActivity() {
         //println(permitedDistance)
         println("Diferencia:")
         println(distanceFromLocation)
-        return (distanceFromLocation <= permitedDistance)
+        return (!(distanceFromLocation <= permitedDistance))
     }
 
     //Función onClick del botón OK
@@ -335,11 +357,45 @@ class ubi2 : AppCompatActivity() {
         fusedLocationClient.removeLocationUpdates(mlocationCallback)
     }
 
+// -----------------------------------------------------------------------------------------------//
+// CONEXIÓN CON LA BASE DE DATOS
+// -----------------------------------------------------------------------------------------------//
+
+    fun changeStatusOnOff(bulbNumber: Int, outOfHome: Boolean): Boolean{
+        val queue = Volley.newRequestQueue(this)
+        val url = "https://appdevops.000webhostapp.com/crud.php"
+        val state = if (outOfHome) 1 else 0
+        val requestBody = "id=${bulbNumber}" + "&editar=1" + "&intensidad=80" + "&estado=${state}"
+        var success = false
+
+        val stringRequest: StringRequest =
+            object : StringRequest(Method.POST, url,
+                Response.Listener { response ->
+                    // response
+                    var strResp = response.toString()
+                    Log.d("API", strResp)
+                    success = true
+                },
+                Response.ErrorListener { error ->
+                    Log.e("API", "error => $error")
+                    var correctToast = Toast.makeText(this, R.string.db_error, Toast.LENGTH_SHORT)
+                    correctToast.setGravity(Gravity.TOP, 0, 0)
+                    correctToast.show()
+                }
+            ) {
+                override fun getBody(): ByteArray {
+                    return requestBody.toByteArray(Charset.defaultCharset())
+                }
+            }
+
+// Add the request to the RequestQueue.
+        queue.add(stringRequest)
+        return success
+    }
 }
 
-// -----------------------------------------------------------------------------------------------//
-// FUNCIONES REUTILIZADAS DE LIGHTSACTIVITY
-// -----------------------------------------------------------------------------------------------//
+
+
 
 /*
 var bulbOneIsLit = false
