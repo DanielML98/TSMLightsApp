@@ -58,6 +58,9 @@ class MainActivity : AppCompatActivity() {
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
             }
+            R.id.imageButtonComandoVoz -> {
+                activateVoice()
+            }
         }
     }
 
@@ -284,5 +287,9 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(contextM, "loc"+lastLocation.latitude.toString(), Toast.LENGTH_SHORT).show()
             //Toast.makeText(contextM, "loc"+lastLocation.longitude.toString(), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun activateVoice() {
+
     }
 }
