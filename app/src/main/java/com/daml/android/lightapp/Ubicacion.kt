@@ -52,7 +52,7 @@ class ubi2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ubi2)
+        setContentView(R.layout.activity_ubicacion)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         fetchLastLocation()
@@ -102,15 +102,21 @@ class ubi2 : AppCompatActivity() {
 
     // Funcion que se activa al salir del rango permitido
     fun prenderFocos(){
-        println("Prendiendo focos!!")
+        println("¡Prendiendo focos!")
 
-
-
+        /*
+        changeStatus(1, bulbOneIsLit)
+        changeStatus(2, bulbTwoIsLit)
+        changeStatus(3, bulbThreeIsLit)
+        changeStatus(4, bulbFourIsLit)*/
     }
 
 
     fun setHome(view: View){
         isHome =true
+        val label_homeSetted : TextView = findViewById(R.id.lblHomeSetted)
+        label_homeSetted.text = "¡Hogar establecido!"
+
     }
 
     fun isInLocation(latitude:Double,longitude:Double): Boolean{
@@ -123,12 +129,14 @@ class ubi2 : AppCompatActivity() {
         return (distanceFromLocation <= permitedDistance)
     }
 
+    //Función onClick del botón OK
+
     fun setPermitedDistance(view: View){
         var editTextDistance = findViewById(R.id.km_input) as EditText
         val label_distance : TextView = findViewById(R.id.detectKM)
 
         permitedDistance = editTextDistance.text.toString().toDouble()
-        label_distance.text = permitedDistance.toString()
+        label_distance.text = "Distancia establecida: "+permitedDistance.toString()+" metros"
         println(permitedDistance)
     }
 
@@ -328,3 +336,47 @@ class ubi2 : AppCompatActivity() {
     }
 
 }
+
+// -----------------------------------------------------------------------------------------------//
+// FUNCIONES REUTILIZADAS DE LIGHTSACTIVITY
+// -----------------------------------------------------------------------------------------------//
+
+/*
+var bulbOneIsLit = false
+var bulbTwoIsLit = false
+var bulbThreeIsLit = false
+var bulbFourIsLit = false
+
+fun changeStatus(bulbNumber: Int, isLit: Boolean): Boolean{
+    val queue = Volley.newRequestQueue(this)
+    val url = "https://appdevops.000webhostapp.com/crud.php"
+    val state = if (isLit) 0 else 1
+    val image = if (isLit) R.drawable.offbulb else R.drawable.onbulb
+    val requestBody = "id=${bulbNumber}" + "&editar=1" + "&intensidad=80" + "&estado=${state}"
+    var success = false
+
+    val stringRequest : StringRequest =
+        object : StringRequest(
+            Method.POST, url,
+            Response.Listener { response ->
+                // response
+                var strResp = response.toString()
+                Log.d("API", strResp)
+                success = true
+            },
+            Response.ErrorListener { error ->
+                Log.e("API", "error => $error")
+                var correctToast = Toast.makeText(this, R.string.db_error, Toast.LENGTH_SHORT)
+                correctToast.setGravity(Gravity.TOP,0,0)
+                correctToast.show()
+            }
+        ){
+            override fun getBody(): ByteArray {
+                return requestBody.toByteArray(Charset.defaultCharset())
+            }
+        }
+
+// Add the request to the RequestQueue.
+    queue.add(stringRequest)
+    return success
+} */

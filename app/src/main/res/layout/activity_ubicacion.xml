@@ -26,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:textSize="18dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:text="Establecer ubicación actual como casa" />
 
     <Button
@@ -37,8 +37,27 @@
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:text="Establecer"
-        android:layout_marginBottom="20dp"
         android:onClick="setHome"/>
+
+    <TextView
+        android:id="@+id/lblHomeSetted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/lblMetros"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="18dp"
+        android:layout_marginBottom="30dp"
+        android:text="Ingrese la distancia a la que desea que se enciendan sus luces" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -48,7 +67,8 @@
             android:id="@+id/km_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Metros" />
+            android:hint="Distancia (en metros)"
+            android:layout_marginBottom="20dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +84,8 @@
         android:id="@+id/detectKM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Distancia establecida"
-        />
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="15dp" />
 
 </LinearLayout>
