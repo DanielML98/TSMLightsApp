@@ -287,4 +287,5 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(contextM, "loc"+lastLocation.longitude.toString(), Toast.LENGTH_SHORT).show()
         }
     }
+
 }

@@ -3,8 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/prepa/Desktop/Nueva carpeta/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.33" />
-        <entry key="..\:/Users/prepa/Desktop/Nueva carpeta/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.11464690496948561" />
+        <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_lights.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10055724417426545" />
       </map>
@@ -15,5 +16,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.11464690496948561" />
+      </ProjectState>
+    </option>
   </component>
 </project>
