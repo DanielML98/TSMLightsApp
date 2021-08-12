@@ -3,8 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.1" />
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_ubicacion.xml" value="0.12291666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+=======
         <entry key="..\:/Users/jbrav/Documents/AndroidStudioProjects/Devops/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.18" />
         <entry key="..\:/Users/jbrav/Documents/AndroidStudioProjects/Devops/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+>>>>>>> master
         <entry key="app/src/main/res/layout/activity_lights.xml" value="0.2515625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2515625" />
       </map>
