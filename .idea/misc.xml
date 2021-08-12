@@ -3,11 +3,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.11464690496948561" />
         <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/jaime/TSMLightsApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_lights.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10055724417426545" />
+=======
+<<<<<<< HEAD
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.1" />
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/betog/AndroidStudioProjects/TSMLightsApp/app/src/main/res/layout/activity_ubicacion.xml" value="0.12291666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+=======
+        <entry key="..\:/Users/jbrav/Documents/AndroidStudioProjects/Devops/TSMLightsApp/app/src/main/res/layout/activity_lights.xml" value="0.18" />
+        <entry key="..\:/Users/jbrav/Documents/AndroidStudioProjects/Devops/TSMLightsApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
+>>>>>>> master
+        <entry key="app/src/main/res/layout/activity_lights.xml" value="0.2515625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2515625" />
+>>>>>>> 32c6965ecd84a886cb3f7bb603ae97909e8412f0
       </map>
     </option>
   </component>
