@@ -34,7 +34,6 @@ import com.google.android.gms.tasks.Task
 import java.nio.charset.Charset
 import kotlin.math.*
 
-
 lateinit var mFusedLocationClient: FusedLocationProviderClient
 lateinit var  fusedLocationClient: FusedLocationProviderClient
 lateinit var mLocationRequest: LocationRequest
@@ -93,7 +92,6 @@ class ubi2 : AppCompatActivity() {
                         outOfHome = res
                         print("Prendiendo focos :" )
                         println(outOfHome)
-                        Toast.makeText(this@ubi2, res.toString(), Toast.LENGTH_SHORT).show()
 
                         if (outOfHome) prenderFocos()
 
@@ -103,9 +101,10 @@ class ubi2 : AppCompatActivity() {
                         //Con la variable focosEncendidos se evita que se manden demasiadas peticiones a la base
 
                         if(outOfHome && focosApagados) {
-                            for(num in 1..4){
+                            for(num in 1..6){
                                 changeStatusOnOff(num,outOfHome)
                             }
+
                             focosApagados = false
                         }
                     }
@@ -125,12 +124,6 @@ class ubi2 : AppCompatActivity() {
     // Funcion que se activa al salir del rango permitido
     fun prenderFocos(){
         println("¡Prendiendo focos!")
-
-        /*
-        changeStatus(1, bulbOneIsLit)
-        changeStatus(2, bulbTwoIsLit)
-        changeStatus(3, bulbThreeIsLit)
-        changeStatus(4, bulbFourIsLit)*/
     }
 
 

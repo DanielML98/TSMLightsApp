@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".ubi2">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
         android:layout_marginBottom="30dp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:text="Ubicación" />
 
     <TextView
@@ -32,7 +31,7 @@
     <Button
         android:id="@+id/btndetectar"
         android:layout_width="wrap_content"
-        android:ems="13"
+        android:ems="14"
         android:gravity="center"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
@@ -68,17 +67,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Distancia (en metros)"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginBottom="20dp"
+            android:inputType="phone"
+            android:digits="1234567890"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonOK"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
         android:onClick="setPermitedDistance"
-        />
+        android:ems="14"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/detectKM"
