@@ -275,9 +275,6 @@ class MainActivity : AppCompatActivity() {
             ).show()
         }
     }
-<<<<<<< HEAD
-
-
     //Función para obtener ubicación
     fun getLastLocation(){
         if(objetoSOSUbicacion.checkSOSLocPermission()){
@@ -323,7 +320,4 @@ class MainActivity : AppCompatActivity() {
             //Toast.makeText(contextM, "loc"+lastLocation.longitude.toString(), Toast.LENGTH_SHORT).show()
         }
     }
-
-=======
->>>>>>> 32c6965ecd84a886cb3f7bb603ae97909e8412f0
 }
