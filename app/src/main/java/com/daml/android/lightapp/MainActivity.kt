@@ -44,16 +44,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         var txtVComandoVoz: TextView = findViewById(R.id.txtVcomandoVoz)
-        // ^a$|^al$|^del$|^la$|^el$|^de$ en
-        var cadenaVoz: String = "él día de mi suerte Yó quiero del bueno al carbón"
-        limpiarCadena(cadenaVoz)
-        /*
-        var cadena1: String = "a"
-        var cadena2: String = "el"
-        Toast.makeText(this, Regex("^a$|^del$|^el$").matches(cadena1).toString(), Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, Regex("^a$|^del$|^el$").matches(cadena2).toString(), Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, Regex("^a$|^del$|^el$").matches("la comidel").toString(), Toast.LENGTH_SHORT).show()
+        // ^a$|^al$|^del$|^la$|^el$|^de$ en foco se eliminan
+        /*Frases probadas:
+        foco modifica foco casa 17 Recámara
+        "apaga la sala"
+        "cambia algo por favor"
+        "ilumina el comedor a 24" (ilumina para mí cuenta como cambiar)
+        "prende foco por favor a 50"
+        "a 27 apaga"
+        prende estancia por favor
+        configurando la estancia
+        a 27 modifica la sala
          */
+        var cadenaVoz: String = "a 27 modifica la sala"
+        var listaVoz: MutableList<String> = limpiarCadena(cadenaVoz)
+        cadenaVoz = buscadorPalabrasClave(listaVoz)
+        Toast.makeText(this, cadenaVoz, Toast.LENGTH_SHORT).show()
 
     }
 
@@ -315,28 +321,118 @@ class MainActivity : AppCompatActivity() {
 
         //ELiminar las partículas no requeridas
         for(i in arregloPalabras.size-1 downTo 0){
-            if(Regex("^a$|^al$|^del$|^la$|^el$|^de$|^en$").matches(arregloPalabras[i])){
+            if(Regex("^a$|^al$|^del$|^la$|^el$|^de$|^en$|^foco$").matches(arregloPalabras[i])){
                 arregloPalabras.removeAt(i)
             }
         }
+        /*
         for(i in arregloPalabras){
             Toast.makeText(this,i,Toast.LENGTH_SHORT).show()
         }
+        */
 
         return arregloPalabras
     }
-}
 
-//Función para quitar acentos, devuelve cadena lowercase sin acentos
-fun limpiarAcentos(cadenaAc: String): String {
-    var cleanedString: String?
-    var valor: String = cadenaAc
-    // Normalizar el texto para eliminar acentos, dieresis, cedillas(ç, s, etc.) y tildes
-    valor = valor.lowercase()
-    // Quitar caracteres no ASCII excepto la enie, interrogacion que abre, exclamacion que abre, grados, U con dieresis.
-    cleanedString = Normalizer.normalize(valor, Normalizer.Form.NFD)
-    // Regresar a la forma compuesta, para poder comparar la enie con la tabla de valores
-    cleanedString = cleanedString.replace("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)(\u00B0)(U\u0308)(u\u0308)]".toRegex(), "")
-    cleanedString = Normalizer.normalize(cleanedString, Normalizer.Form.NFC)
-    return cleanedString
+    //Función para quitar acentos, devuelve cadena lowercase sin acentos
+    fun limpiarAcentos(cadenaAc: String): String {
+        var cleanedString: String?
+        var valor: String = cadenaAc
+        // Normalizar el texto para eliminar acentos, dieresis, cedillas(ç, s, etc.) y tildes
+        valor = valor.lowercase()
+        // Quitar caracteres no ASCII excepto la enie, interrogacion que abre, exclamacion que abre, grados, U con dieresis.
+        cleanedString = Normalizer.normalize(valor, Normalizer.Form.NFD)
+        // Regresar a la forma compuesta, para poder comparar la enie con la tabla de valores
+        cleanedString = cleanedString.replace("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)(\u00B0)(U\u0308)(u\u0308)]".toRegex(), "")
+        cleanedString = Normalizer.normalize(cleanedString, Normalizer.Form.NFC)
+        return cleanedString
+    }
+
+    fun buscadorPalabrasClave(listaPalabras: MutableList<String>): String{
+        var requiereIntensidad: Boolean = false
+        var intencion: String = ""
+        var lugar: String = ""
+        var intensidad: String = ""
+        var tieneIntd: Boolean = false
+        val patternIntecionPrender = Regex("prend(?:iendo|ido|er|e|a|o)?|[e]?n[csz](?:ie|e)nd(?:iendo|o|a|er|e|ido)?|a[ck]ti[bv](?:o|ando|ar|ado|a|e|)|[h]?a[bv]ilit(?:e|o|ando|ado|ar|a)|[ck]one[ck]t(?:o|e|ando|ar|ado|a)|ini[csz]i(?:e|o|ando|ar|ado|a)|^on\$")
+        val patternIntecionApagar = Regex("apag(?:ue|e|o|ando|ado|ar|a)|de[sz]a[ck]ti[bv](?:o|e|ando|ado|ar|a)|in[h]?a[bv]ilit(?:o|e|ando|ado|ar|a)|de[sz]a[ck]ti[bv](?:o|e|ando|ado|ar|a)|^of\$|^off\$")
+        val patternIntecionCambiar = Regex("^pon\$|pon(?:er|iendo)|pue[sz]to|e[sz]ta[bv]le[csz](?:[ck]o|[ck]a|iendo|ido|er|e)|[ck]olo[ckq](?:ue|e|o|ar|ando|ado|a)|[ck]am[bv]i(?:e|o|ando|ar|ado|a)?|[ck]onfigur(?:e|o|ando|ado|ar|a)|inten[csz]idad|ilumin(?:e|o|ando|ado|ar|a)|modifi[ckq](?:ue|e|o|ando|ado|ar|a)")
+        //Busca la intención en la lista de palabras
+        for(i in 0..listaPalabras.size-1){
+            if(patternIntecionPrender.matches(listaPalabras[i])){
+                intencion = "prender"
+                listaPalabras.removeAt(i)
+                break
+            }
+            if(patternIntecionApagar.matches(listaPalabras[i])){
+                intencion = "apagar"
+                listaPalabras.removeAt(i)
+                break
+            }
+            if(patternIntecionCambiar.matches(listaPalabras[i])){
+                intencion = "cambiar"
+                listaPalabras.removeAt(i)
+                requiereIntensidad = true
+                break
+            }
+        }
+        if(intencion.isNotEmpty()){
+            //Toast.makeText(this, intencion, Toast.LENGTH_SHORT).show()
+            val patternLugarRecamara = Regex("re[c|k]amara")
+            val patternLugarEstancia = Regex("[e]?[sz]tan[csz]ia")
+            val patternLugarSala = Regex("[sz]ala")
+            val patternLugarComedor = Regex("[ck]omedo[r]")
+            for(i in 0..listaPalabras.size-1){
+                if(patternLugarRecamara.matches(listaPalabras[i])){
+                    lugar = "recamara"
+                    listaPalabras.removeAt(i)
+                    break
+                }
+                if(patternLugarEstancia.matches(listaPalabras[i])){
+                    lugar = "estancia"
+                    listaPalabras.removeAt(i)
+                    break
+                }
+                if(patternLugarSala.matches(listaPalabras[i])){
+                    lugar = "sala"
+                    listaPalabras.removeAt(i)
+                    break
+                }
+                if(patternLugarComedor.matches(listaPalabras[i])){
+                    lugar = "comedor"
+                    listaPalabras.removeAt(i)
+                    break
+                }
+            }
+            if(lugar.isNotEmpty()){
+                if(requiereIntensidad){
+                    //Toast.makeText(this, "Vas bien", Toast.LENGTH_SHORT).show()
+                    for(i in 0..listaPalabras.size-1){
+                        if(listaPalabras[i].toIntOrNull() != null){
+                            intensidad = listaPalabras[i]
+                            break
+                        }
+                    }
+                    if(intensidad.isNotEmpty()){
+                        return intencion+" "+lugar+" "+intensidad
+                    }
+                    else{
+                        Toast.makeText(this, "Perdón, puedes decir la intensidad de nuevo?", Toast.LENGTH_SHORT).show()
+                        return ""
+                    }
+                }
+                else{
+                    return intencion+" "+lugar
+                }
+            }
+            else{
+                Toast.makeText(this, "Perdón, puedes decir el lugar de nuevo?", Toast.LENGTH_SHORT).show()
+                return ""
+            }
+        }
+        else{
+            Toast.makeText(this, "Perdón, puedes decir tu intención de nuevo?", Toast.LENGTH_SHORT).show()
+            return ""
+        }
+    }
 }
