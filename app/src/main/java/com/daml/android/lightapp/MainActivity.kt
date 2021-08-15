@@ -58,11 +58,11 @@ class MainActivity : AppCompatActivity() {
         "a 27 apaga"
         prende estancia por favor
         configurando la estancia
-         */
+
         var cadenaVoz: String = "a 27 modifica la sala"
         var listaVoz: MutableList<String> = limpiarCadena(cadenaVoz)
         cadenaVoz = buscadorPalabrasClave(listaVoz)
-        Toast.makeText(this, cadenaVoz, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, cadenaVoz, Toast.LENGTH_SHORT).show()  */
     }
 
     //Function for the 3 ImageButtons in activity_main.xml
@@ -79,7 +79,14 @@ class MainActivity : AppCompatActivity() {
                 //Todo: Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
-                //changeStatusIntensity(2,30)
+                val estado = changeStatusIntensity(1,50)
+                if(!estado){
+                    Toast.makeText(this, "Foco prendido a 50",Toast.LENGTH_LONG).show()
+                    println("Foco prendido a 50")
+                }else{
+                    Toast.makeText(this, "Foco no pudo modificar su intensidad",Toast.LENGTH_LONG).show()
+                    println("Foco no pudo modificar su intensidad")
+                }
             }
             R.id.imageButtonComandoVoz -> {
                 activateVoice()
@@ -319,8 +326,10 @@ class MainActivity : AppCompatActivity() {
         if(requestCode == RQ_SPEECH_REC && resultCode == Activity.RESULT_OK){
             val result:ArrayList<String>? = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             Toast.makeText(this,result?.get(0).toString(),Toast.LENGTH_LONG).show()
-            val textoReconocido = result?.get(0).toString()  // Aquí se obtiene lo leído de la voz del ususario
+            var textoReconocido = result?.get(0).toString()  // Aquí se obtiene lo leído de la voz del ususario
             println(textoReconocido)
+            var listaVoz: MutableList<String> = limpiarCadena(textoReconocido)
+            textoReconocido = buscadorPalabrasClave(listaVoz)
             separateWords(textoReconocido)
         }
     }
@@ -333,6 +342,8 @@ class MainActivity : AppCompatActivity() {
 
         if(size in 2..3){
             if(size<3){
+
+                Toast.makeText(this, "Entraste a <3",Toast.LENGTH_SHORT).show()
                 var action = arr[0].toLowerCase()
                 val id = arr[1].toLowerCase()
                 var numFoco= obtenerID(id)
@@ -347,7 +358,7 @@ class MainActivity : AppCompatActivity() {
 
                     val estado = changeStatusOnOff(numFoco,false)
                     println(numFoco)
-                    if(estado){
+                    if(!estado){
                         Toast.makeText(this, "El foco se prendió",Toast.LENGTH_SHORT).show()
                         println("El foco se prendió")
                     }
@@ -357,7 +368,7 @@ class MainActivity : AppCompatActivity() {
 
                     val estado = changeStatusOnOff(numFoco,true)
                     println(numFoco)
-                    if(estado){
+                    if(!estado){
                         Toast.makeText(this, "El foco se apagó",Toast.LENGTH_LONG).show()
                         println("El foco se apagó")
                     }
@@ -366,6 +377,7 @@ class MainActivity : AppCompatActivity() {
 
             }else{
 
+                Toast.makeText(this, "Entraste a >3",Toast.LENGTH_SHORT).show()
                 var action = arr[0].toLowerCase()
                 val id = arr[1].toLowerCase()
                 var numFoco= obtenerID(id)
@@ -379,7 +391,7 @@ class MainActivity : AppCompatActivity() {
 
                 if(coincideActionIntensidad){
                     val estado = changeStatusIntensity(numFoco,intensidadNum)
-                    if(estado){
+                    if(!estado){
                         Toast.makeText(this, "Foco prendido a ${intensidad}%",Toast.LENGTH_LONG).show()
                         println("Foco prendido a ${intensidad}%")
                     }else{
@@ -412,19 +424,21 @@ class MainActivity : AppCompatActivity() {
             val sa = Regex("[sz]ala")
             val com = Regex("[ck]omedo[r]?")
 
-            if(rec.matches("foco")){
+            if(rec.matches(foco)){
                 Id = 3
-            } else if (es.matches("foco")){
+            } else if (es.matches(foco)){
                 Id = 4
-            }else if(sa.matches("foco")){
+            }else if(sa.matches(foco)){
                 Id = 5
-            }else if(com.matches("foco")){
+            }else if(com.matches(foco)){
                 Id = 6
             }
         }else{
             Toast.makeText(this,"Esa habitación no está registrada",Toast.LENGTH_SHORT).show()
             println("Esa habitación no está registrada")
         }
+        Toast.makeText(this, "El ID es: ${Id}%",Toast.LENGTH_LONG)
+        println(Id)
         return Id
 
     }
@@ -459,8 +473,6 @@ class MainActivity : AppCompatActivity() {
                     // response
                     var strResp = response.toString()
                     Log.d("API", strResp)
-                    //b.setImageResource(image)
-                    //toggleBulb(b)
                     success = true
                 },
                 Response.ErrorListener { error ->
@@ -484,7 +496,7 @@ class MainActivity : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         val url = "https://appdevops.000webhostapp.com/crud.php"
         //val state = if (isLit) 0 else 1
-        val requestBody = "id=${bulbNumber}" + "&editar=1" + "&intensidad=$Intensity" + "&estado=0"
+        val requestBody = "id=${bulbNumber}" + "&editar=1" + "&intensidad=$Intensity" + "&estado=1"
         var success = false
 
         val stringRequest : StringRequest =
