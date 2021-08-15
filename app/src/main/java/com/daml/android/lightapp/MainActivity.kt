@@ -47,22 +47,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        var txtVComandoVoz: TextView = findViewById(R.id.txtVcomandoVoz)
-        // ^a$|^al$|^del$|^la$|^el$|^de$ en foco se eliminan
-        /*Frases probadas:
-        foco modifica foco casa 17 Recámara
-        "apaga la sala"
-        "cambia algo por favor"
-        "ilumina el comedor a 24" (ilumina para mí cuenta como cambiar)
-        "prende foco por favor a 50"
-        "a 27 apaga"
-        prende estancia por favor
-        configurando la estancia
-
-        var cadenaVoz: String = "a 27 modifica la sala"
-        var listaVoz: MutableList<String> = limpiarCadena(cadenaVoz)
-        cadenaVoz = buscadorPalabrasClave(listaVoz)
-        Toast.makeText(this, cadenaVoz, Toast.LENGTH_SHORT).show()  */
     }
 
     //Function for the 3 ImageButtons in activity_main.xml
@@ -76,21 +60,13 @@ class MainActivity : AppCompatActivity() {
                 checkPermissions()
             }
             R.id.imageButtonUbicacion -> {
-                //Todo: Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
+
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
-                val estado = changeStatusIntensity(1,50)
-                if(!estado){
-                    Toast.makeText(this, "Foco prendido a 50",Toast.LENGTH_LONG).show()
-                    println("Foco prendido a 50")
-                }else{
-                    Toast.makeText(this, "Foco no pudo modificar su intensidad",Toast.LENGTH_LONG).show()
-                    println("Foco no pudo modificar su intensidad")
-                }
+
             }
             R.id.imageButtonComandoVoz -> {
                 activateVoice()
-                //changeStatusOnOff(1, false)
             }
         }
     }
@@ -343,7 +319,7 @@ class MainActivity : AppCompatActivity() {
         if(size in 2..3){
             if(size<3){
 
-                Toast.makeText(this, "Entraste a <3",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Entraste a <3",Toast.LENGTH_SHORT).show()
                 var action = arr[0].toLowerCase()
                 val id = arr[1].toLowerCase()
                 var numFoco= obtenerID(id)
@@ -377,7 +353,7 @@ class MainActivity : AppCompatActivity() {
 
             }else{
 
-                Toast.makeText(this, "Entraste a >3",Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Entraste a >3",Toast.LENGTH_SHORT).show()
                 var action = arr[0].toLowerCase()
                 val id = arr[1].toLowerCase()
                 var numFoco= obtenerID(id)
@@ -660,5 +636,20 @@ class MainActivity : AppCompatActivity() {
             return ""
         }
     }
+
+    // ^a$|^al$|^del$|^la$|^el$|^de$ en foco se eliminan
+    /*Frases probadas:
+    foco modifica foco casa 17 Recámara
+    "apaga la sala"
+    "cambia algo por favor"
+    "ilumina el comedor a 24" (ilumina para mí cuenta como cambiar)
+    "prende foco por favor a 50"
+    "a 27 apaga"
+    prende estancia por favor
+    configurando la estancia
+
+    var cadenaVoz: String = "a 27 modifica la sala"
+    var listaVoz: MutableList<String> = limpiarCadena(cadenaVoz)
+    cadenaVoz = buscadorPalabrasClave(listaVoz)*/
 
 }
