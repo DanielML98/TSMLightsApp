@@ -532,7 +532,7 @@ class MainActivity : AppCompatActivity() {
 
         //ELiminar las partículas no requeridas
         for(i in arregloPalabras.size-1 downTo 0){
-            if(Regex("^a$|^al$|^del$|^la$|^el$|^de$|^en$|^foco$").matches(arregloPalabras[i])){
+            if(Regex("^a$|^al$|^del$|^la$|^el$|^de$|^en$|^foco$|^por$|^favor$").matches(arregloPalabras[i])){
                 arregloPalabras.removeAt(i)
             }
         }
@@ -618,9 +618,23 @@ class MainActivity : AppCompatActivity() {
             if(lugar.isNotEmpty()){
                 if(requiereIntensidad){
                     //Toast.makeText(this, "Vas bien", Toast.LENGTH_SHORT).show()
+                    var cadenaAux: String
                     for(i in 0..listaPalabras.size-1){
-                        if(listaPalabras[i].toIntOrNull() != null){
-                            intensidad = listaPalabras[i]
+                        if(listaPalabras[i].length > 1){
+                            if(listaPalabras[i].first().compareTo('a') == 0){
+                                cadenaAux = listaPalabras[i].substring(1)
+                            }else if(listaPalabras[i].last().compareTo('%') == 0){
+                                cadenaAux = listaPalabras[i].dropLast(1)
+                            }
+                            else{
+                                cadenaAux = listaPalabras[i]
+                            }
+                        }
+                        else{
+                            cadenaAux = listaPalabras[i]
+                        }
+                        if(cadenaAux.toIntOrNull() != null){
+                            intensidad = cadenaAux
                             break
                         }
                     }
