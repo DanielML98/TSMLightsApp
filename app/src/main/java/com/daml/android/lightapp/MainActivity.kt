@@ -13,12 +13,14 @@ import android.os.Bundle
 import android.os.Looper
 import android.telephony.SmsManager
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import java.io.IOException
+import java.text.Normalizer
 
 /*import com.android.volley.Request
 import com.android.volley.Response
@@ -41,6 +43,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        var txtVComandoVoz: TextView = findViewById(R.id.txtVcomandoVoz)
+        // ^a$|^al$|^del$|^la$|^el$|^de$ en
+        var cadenaVoz: String = "él día de mi suerte Yó quiero del bueno al carbón"
+        limpiarCadena(cadenaVoz)
+        /*
+        var cadena1: String = "a"
+        var cadena2: String = "el"
+        Toast.makeText(this, Regex("^a$|^del$|^el$").matches(cadena1).toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, Regex("^a$|^del$|^el$").matches(cadena2).toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, Regex("^a$|^del$|^el$").matches("la comidel").toString(), Toast.LENGTH_SHORT).show()
+         */
+
     }
 
     //Function for the 3 ImageButtons in activity_main.xml
@@ -292,4 +306,37 @@ class MainActivity : AppCompatActivity() {
     private fun activateVoice() {
 
     }
+
+    //Separa la cadena y quita partículas a,del,la,el,de
+    fun limpiarCadena(cadena: String): MutableList<String>{
+        //Quita acentos
+        var cadenaSinAcentos:String = limpiarAcentos(cadena)
+        var arregloPalabras: MutableList<String> = cadenaSinAcentos.split(" ").toMutableList()
+
+        //ELiminar las partículas no requeridas
+        for(i in arregloPalabras.size-1 downTo 0){
+            if(Regex("^a$|^al$|^del$|^la$|^el$|^de$|^en$").matches(arregloPalabras[i])){
+                arregloPalabras.removeAt(i)
+            }
+        }
+        for(i in arregloPalabras){
+            Toast.makeText(this,i,Toast.LENGTH_SHORT).show()
+        }
+
+        return arregloPalabras
+    }
+}
+
+//Función para quitar acentos, devuelve cadena lowercase sin acentos
+fun limpiarAcentos(cadenaAc: String): String {
+    var cleanedString: String?
+    var valor: String = cadenaAc
+    // Normalizar el texto para eliminar acentos, dieresis, cedillas(ç, s, etc.) y tildes
+    valor = valor.lowercase()
+    // Quitar caracteres no ASCII excepto la enie, interrogacion que abre, exclamacion que abre, grados, U con dieresis.
+    cleanedString = Normalizer.normalize(valor, Normalizer.Form.NFD)
+    // Regresar a la forma compuesta, para poder comparar la enie con la tabla de valores
+    cleanedString = cleanedString.replace("[^\\p{ASCII}(N\u0303)(n\u0303)(\u00A1)(\u00BF)(\u00B0)(U\u0308)(u\u0308)]".toRegex(), "")
+    cleanedString = Normalizer.normalize(cleanedString, Normalizer.Form.NFC)
+    return cleanedString
 }
