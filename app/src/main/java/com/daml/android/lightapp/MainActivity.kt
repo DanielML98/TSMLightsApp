@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
         "a 27 apaga"
         prende estancia por favor
         configurando la estancia
-        a 27 modifica la sala
          */
         var cadenaVoz: String = "a 27 modifica la sala"
         var listaVoz: MutableList<String> = limpiarCadena(cadenaVoz)
