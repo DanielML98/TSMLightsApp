@@ -114,7 +114,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/imageButtonComandoVoz"
+                android:id="@+id/imageButtonVoice"
                 android:layout_width="wrap_content"
                 android:layout_height="87dp"
                 android:layout_gravity="center"

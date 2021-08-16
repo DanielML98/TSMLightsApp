@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                 //startActivity(intent)
 
             }
-            R.id.imageButtonComandoVoz -> {
+            R.id.imageButtonVoice -> {
                 activateVoice()
             }
         }
