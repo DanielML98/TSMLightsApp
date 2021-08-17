@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 //startActivity(intent)
                 //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
                 //val intent = Intent(this, Ubicacion::class.java)
+
                 val intent = Intent(this, ubi2::class.java)
                 startActivity(intent)
             }
@@ -109,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                 flashLightL()
             }
             //Obtén ubicación
-            //getLastLocation()
+            getLastLocation()
         }
 
     }
@@ -255,8 +256,8 @@ class MainActivity : AppCompatActivity() {
     //Función para enviar SMS, esta debe ser llamada después de obtener la ubicación
     private fun sendSMS() {
         val enviarSMS = SmsManager.getDefault()
-        val numeroUno = 5521754838
-        val numeroDos = 5574044562
+        val numeroUno = 5512242480
+        val numeroDos = 5611493466
 
         //Formato para enviar mensaje SOS
         val enlaceUbicacion = "https://www.google.com.mx/maps/search/?api=1&query="
