@@ -86,26 +86,7 @@ class LightsActivity : AppCompatActivity() {
     }
 
 
-    /*fun postVolley(bulbNumber: Int) {
-        val queue = Volley.newRequestQueue(this)
-        val url = "https://appdevops.000webhostapp.com/crud.php"
-        val stringReq : StringRequest =
-            object : StringRequest(Method.POST, url,
-                Response.Listener { response ->
-                    // response
-                    var strResp = response.toString()
-                    Log.d("API", strResp)
-                },
-                Response.ErrorListener { error ->
-                    Log.d("API", "error => $error")
-                }
-            ){
-                override fun getBody(): ByteArray {
-                    return requestBody.toByteArray(Charset.defaultCharset())
-                }
-            }
-        queue.add(stringReq)
-    }*/
+
 
 
     // This function changes label text to the returned string in the GET request to the url

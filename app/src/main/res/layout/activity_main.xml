@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/imageButtonFoco"
@@ -110,6 +110,34 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="Ubicación"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/imageButtonVoice"
+                android:layout_width="wrap_content"
+                android:layout_height="87dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@string/IB3"
+                android:onClick="buttonPressedMain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageButtonSOS"
+                app:srcCompat="@drawable/ubicacion"
+                tools:ignore="UsingOnClickInXml" />
+
+            <TextView
+                android:id="@+id/txtVcomandoVoz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="Comando de voz"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
