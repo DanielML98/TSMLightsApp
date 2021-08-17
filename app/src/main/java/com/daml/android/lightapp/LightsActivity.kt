@@ -24,7 +24,6 @@ class LightsActivity : AppCompatActivity() {
     var bulbThreeIsLit = false
     var bulbFourIsLit = false
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lights)

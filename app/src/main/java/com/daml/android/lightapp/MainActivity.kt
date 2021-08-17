@@ -50,8 +50,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Function for the 3 ImageButtons in activity_main.xml
-    fun buttonPressedMain (view: View) {
-        when(view.id) {
+    fun buttonPressedMain(view: View) {
+        when (view.id) {
             R.id.imageButtonFoco -> {
                 val intent = Intent(this, LightsActivity::class.java)
                 startActivity(intent)
@@ -63,8 +63,12 @@ class MainActivity : AppCompatActivity() {
 
                 //val intent = Intent(this, LocationActivity::class.java)
                 //startActivity(intent)
-
+                //Reemplazar LocationActivity por el nombre del archivo .kt de la actividad Ubicación
+                //val intent = Intent(this, Ubicacion::class.java)
+                val intent = Intent(this, ubi2::class.java)
+                startActivity(intent)
             }
+            
             R.id.imageButtonVoice -> {
                 activateVoice()
             }
@@ -74,30 +78,38 @@ class MainActivity : AppCompatActivity() {
     private fun checkPermissions() {
 
         permissionsNeeded = mutableListOf()
-        if(!objetoSOSUbicacion.checkSOSLocPermission()){
+        if (!objetoSOSUbicacion.checkSOSLocPermission()) {
             permissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
         }
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.SEND_SMS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             permissionsNeeded.add(Manifest.permission.SEND_SMS)
         }
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             permissionsNeeded.add(Manifest.permission.CAMERA)
         }
         //Si alguno de los permisos no ha sido aceptado
-        if(!permissionsNeeded.isEmpty()){
+        if (!permissionsNeeded.isEmpty()) {
             //Pregunta por los permisos faltantes
             requestMissingPermissions()
         }
         //Si todos los permisos han sido aceptados
-        else{
+        else {
             //Prende lamparita
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 flashLight()
-            }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
+            } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
                 flashLightL()
             }
             //Obtén ubicación
-            getLastLocation()
+            //getLastLocation()
         }
 
     }
@@ -121,53 +133,74 @@ class MainActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             cameraM = getSystemService(CAMERA_SERVICE) as CameraManager
-            val  cameraListId = cameraM.cameraIdList[0]
+            val cameraListId = cameraM.cameraIdList[0]
             cameraM.setTorchMode(cameraListId, true)
         }
     }
 
     private fun alertCameraPermissions() {
         //Si el usuario le dio a denegar permiso
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
             //Toast.makeText(this,"Los permisos Camara ya han sido rechazados",Toast.LENGTH_SHORT).show()
             //Explica al usuario por qué debe aceptar el permiso
             AlertDialog.Builder(this)
                 .setMessage("Se requiere del permiso Cámara para prender la lámpara del dispositivo")
                 .setPositiveButton("OK", null).show()
-        //Si le dio a no volver a preguntar por el permiso
-        }else{
-            Toast.makeText(this, "Por favor, activa el permiso de Cámara en la configuración de tu teléfono", Toast.LENGTH_SHORT).show()
+            //Si le dio a no volver a preguntar por el permiso
+        } else {
+            Toast.makeText(
+                this,
+                "Por favor, activa el permiso de Cámara en la configuración de tu teléfono",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun alertSendSMSPermissions() {
         //Si el usuario le dio a denegar permiso
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.SEND_SMS
+            )
+        ) {
             AlertDialog.Builder(this)
                 .setMessage("Se requiere del permiso SMS para enviar mensajes a tus contactos de emergencia")
                 .setPositiveButton("OK", null).show()
-        //Si le dio a no volver a preguntar por el permiso
-        }else{
-            Toast.makeText(this, "Por favor, activa el permiso de SMS en la configuración de tu teléfono",
-                Toast.LENGTH_SHORT).show()
+            //Si le dio a no volver a preguntar por el permiso
+        } else {
+            Toast.makeText(
+                this, "Por favor, activa el permiso de SMS en la configuración de tu teléfono",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     private fun alertLocationPermissions() {
         //Si el usuario le dio a denegar permiso
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)){
+        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
             AlertDialog.Builder(this)
                 .setMessage("Se requiere del permiso Ubicación para enviar la ubicación en la que te encuentras")
                 .setPositiveButton("OK", null).show()
-        //Si le dio a no volver a preguntar por el permiso
-        }else{
-            Toast.makeText(this, "Por favor, activa el permiso de Ubicación en la configuración de tu teléfono",
-                Toast.LENGTH_SHORT).show()
+            //Si le dio a no volver a preguntar por el permiso
+        } else {
+            Toast.makeText(
+                this,
+                "Por favor, activa el permiso de Ubicación en la configuración de tu teléfono",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
-    private fun requestMissingPermissions(){
-        ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(),REQUEST_ID_MULTIPLE_PERMISSIONS)
+    private fun requestMissingPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            permissionsNeeded.toTypedArray(),
+            REQUEST_ID_MULTIPLE_PERMISSIONS
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -177,13 +210,13 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        if(requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS){
-            if(grantResults.isNotEmpty()){
+        if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
+            if (grantResults.isNotEmpty()) {
                 var algunPermisoDenegado = false
-                for(i in 0..permissionsNeeded.size-1){
-                    if (grantResults[i] == PackageManager.PERMISSION_DENIED){
+                for (i in 0..permissionsNeeded.size - 1) {
+                    if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
                         algunPermisoDenegado = true
-                        when(permissionsNeeded[i]){
+                        when (permissionsNeeded[i]) {
                             Manifest.permission.ACCESS_FINE_LOCATION -> alertLocationPermissions()
                             Manifest.permission.SEND_SMS -> alertSendSMSPermissions()
                             Manifest.permission.CAMERA -> alertCameraPermissions()
@@ -191,22 +224,26 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 //Si todos los permisos preguntados fueron otorgados
-                if(algunPermisoDenegado == false){
+                if (algunPermisoDenegado == false) {
                     //Prende la lámpara
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         flashLight()
-                    }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
+                    } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
                         flashLightL()
                     }
                     //Obtén ubicación y envía SMS
-                    getLastLocation()
-                //Si se denegó algún permiso
-                }else {
+                    //getLastLocation()
+                    //Si se denegó algún permiso
+                } else {
                     //Ve si el permiso de cámara se otorgó e intenta al menos prender la lámpara
-                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+                    if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.CAMERA
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             flashLight()
-                        }else if(Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP){
+                        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1 || Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
                             flashLightL()
                         }
                     }
@@ -217,30 +254,30 @@ class MainActivity : AppCompatActivity() {
 
     //Función para enviar SMS, esta debe ser llamada después de obtener la ubicación
     private fun sendSMS() {
-        val enviarSMS= SmsManager.getDefault()
-        val numeroUno=5521754838
-        val numeroDos=5574044562
+        val enviarSMS = SmsManager.getDefault()
+        val numeroUno = 5521754838
+        val numeroDos = 5574044562
 
         //Formato para enviar mensaje SOS
-        val enlaceUbicacion ="https://www.google.com.mx/maps/search/?api=1&query="
+        val enlaceUbicacion = "https://www.google.com.mx/maps/search/?api=1&query="
 
-        if(latitud != "" && longitud != ""){
+        if (latitud != "" && longitud != "") {
             val mensaje1 =
                 "Eres mi contacto de emergencia, ayuda, esta es mi ubicacion:\n$enlaceUbicacion$latitud,$longitud"
-            val mensaje1_1= "Mis coordenadas:\n\nLatitud: $latitud \nLongitud: $longitud"
+            val mensaje1_1 = "Mis coordenadas:\n\nLatitud: $latitud \nLongitud: $longitud"
 
-            val mensaje2= "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud"
+            val mensaje2 = "SOS, esta es mi ubicacion: $enlaceUbicacion$latitud,$longitud"
             println(mensaje1)
 
             //Sentencia para enviar mensaje a contacto
-            enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1,null,null)
+            enviarSMS.sendTextMessage(numeroUno.toString(), null, mensaje1, null, null)
             //enviarSMS.sendTextMessage(numeroUno.toString(),null, mensaje1_1,null,null)
-            enviarSMS.sendTextMessage(numeroDos.toString(),null, mensaje2,null,null)
+            enviarSMS.sendTextMessage(numeroDos.toString(), null, mensaje2, null, null)
 
             //Mensaje en la aplicación de éxito
-            Toast.makeText(this,"Mensaje enviado a tus dos contactos",Toast.LENGTH_SHORT).show()
-            Toast.makeText(this,"Lampara encendida",Toast.LENGTH_SHORT).show()
-        }else{
+            Toast.makeText(this, "Mensaje enviado a tus dos contactos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Lampara encendida", Toast.LENGTH_SHORT).show()
+        } else {
             Toast.makeText(
                 this,
                 "Hubo un error al enviar el SMS, esto depende de tu red, reintenta presionar el botón",
