@@ -217,7 +217,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
         android:id="@+id/layoutBulbTwo"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -310,7 +310,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
         android:id="@+id/layoutBulbThre"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -402,7 +402,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="20dp"
         android:id="@+id/layoutBulbFour"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"

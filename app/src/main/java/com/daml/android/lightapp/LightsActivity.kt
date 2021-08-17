@@ -302,10 +302,13 @@ class LightsActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 foco3.iNtensity=progress
                 intensidadFocoUno.text ="Intensidad: "+ foco3.iNtensity.toString()
-                //changeStatus1(3,bulbOneIsLit)
+
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+
+                changeStatus1(3,bulbOneIsLit,foco3)
+            }
         })
 
         barraFocoDos.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -331,17 +334,17 @@ class LightsActivity : AppCompatActivity() {
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                changeStatus1(6,bulbFourIsLit)
+                //changeStatus1(6,bulbFourIsLit,foco6)
             }
         })
     }
 
-    fun changeStatus1(bulbNumber: Int, isLit: Boolean): Boolean{
+    fun changeStatus1(bulbNumber: Int, isLit: Boolean, bulbo: Foco): Boolean{
         val queue = Volley.newRequestQueue(this)
         val url = "https://appdevops.000webhostapp.com/crud.php"
-        val state = isLit
+        val state = if(isLit) 1 else 0
         var requestBody = "0"
-        requestBody="id=${bulbNumber}" + "&editar=1" + "&intensidad=${focos[bulbNumber-1].iNtensity}"+ "&estado=${state}"
+        requestBody="id=${bulbNumber}" + "&editar=1" + "&intensidad=${bulbo.iNtensity}"+ "&estado=${state}"
         var success = false
 
         val stringRequest : StringRequest =
@@ -352,7 +355,7 @@ class LightsActivity : AppCompatActivity() {
                     Log.d("API", strResp)
                     success = true
                     println("Hola 1")
-                    println(focos[bulbNumber-1].iNtensity.toString())
+                    println(bulbo.iNtensity.toString())
                     println("Hola 2")
                 },
                 Response.ErrorListener { error ->
