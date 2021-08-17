@@ -91,4 +91,12 @@
         android:layout_marginLeft="15dp"
         android:textSize="15dp" />
 
+    <TextView
+        android:id="@+id/onLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp"
+        android:textSize="15dp" />
+
 </LinearLayout>

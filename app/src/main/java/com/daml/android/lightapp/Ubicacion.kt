@@ -44,7 +44,7 @@ var REQUEST_CHECK_SETTINGS = 102
 //ref https://stackoverflow.com/questions/41500765/how-can-i-get-continuous-location-updates-in-android-like-in-google-maps
 
 class ubi2 : AppCompatActivity() {
-    var permitedDistance = 0.0
+    var permitedDistance = 200.0
 
     // Enviar userLatitude y userLongitude a SOS
     var userLatitude = 0.0
@@ -93,10 +93,17 @@ class ubi2 : AppCompatActivity() {
                         print("Prendiendo focos :" )
                         println(outOfHome)
 
-                        if (outOfHome) prenderFocos()
-
+                        if (outOfHome) {
+                            prenderFocos()
+                            val label_on : TextView = findViewById(R.id.onLabel)
+                            label_on.text = "¡Focos prendidos!"
+                        }
                         if (!outOfHome) focosApagados = true
 
+                        if (focosApagados){
+                            val label_on : TextView = findViewById(R.id.onLabel)
+                            label_on.text = ""
+                        }
                         //Función que apaga y prende los focos en la base de datos
                         //Con la variable focosEncendidos se evita que se manden demasiadas peticiones a la base
 
