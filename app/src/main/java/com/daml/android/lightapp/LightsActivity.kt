@@ -58,7 +58,6 @@ class LightsActivity : AppCompatActivity() {
         super.onStart()
         initialUpdateStatus()
         variablesSeeksBars()
-
     }
 
     //This is the onClick listener for the three light buttons
@@ -86,7 +85,6 @@ class LightsActivity : AppCompatActivity() {
         var layout3 : LinearLayout = findViewById(R.id.layoutBulbThre)
         var layout4 : LinearLayout = findViewById(R.id.layoutBulbFour)
         if(!layout.isVisible) {
-
             layout.isVisible = true
         }
         else if(!layout2.isVisible) layout2.isVisible = true
@@ -122,9 +120,11 @@ class LightsActivity : AppCompatActivity() {
             editext.isVisible = true
         }
         else{
-            boton.setText("Cambiar Nombre")
-            textBulb.text = editext.getText()
-            editext.isVisible = false
+            if(!editext.getText().isEmpty()){
+                boton.setText("Cambiar Nombre")
+                textBulb.text = editext.getText()
+                editext.isVisible = false
+            }
         }
     }
 
@@ -181,28 +181,6 @@ class LightsActivity : AppCompatActivity() {
             R.id.imageButton4 -> bulbFourIsLit = !bulbFourIsLit
         }
     }
-
-
-    /*fun postVolley(bulbNumber: Int) {
-        val queue = Volley.newRequestQueue(this)
-        val url = "https://appdevops.000webhostapp.com/crud.php"
-        val stringReq : StringRequest =
-            object : StringRequest(Method.POST, url,
-                Response.Listener { response ->
-                    // response
-                    var strResp = response.toString()
-                    Log.d("API", strResp)
-                },
-                Response.ErrorListener { error ->
-                    Log.d("API", "error => $error")
-                }
-            ){
-                override fun getBody(): ByteArray {
-                    return requestBody.toByteArray(Charset.defaultCharset())
-                }
-            }
-        queue.add(stringReq)
-    }*/
 
 
     // This function changes label text to the returned string in the GET request to the url
@@ -304,11 +282,8 @@ class LightsActivity : AppCompatActivity() {
                 intensidadFocoUno.text ="Intensidad: "+ foco3.iNtensity.toString()
 
             }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
-                changeStatus1(3,bulbOneIsLit,foco3)
-            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?){}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {changeStatus1(3,bulbOneIsLit,foco3)}
         })
 
         barraFocoDos.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
@@ -317,7 +292,7 @@ class LightsActivity : AppCompatActivity() {
                 intensidadFocoDos.text ="Intensidad: "+ foco4.iNtensity.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {changeStatus1(4,bulbTwoIsLit,foco4)}
         })
         barraFocoTres.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -325,7 +300,7 @@ class LightsActivity : AppCompatActivity() {
                 intensidadFocoTres.text ="Intensidad: "+ foco5.iNtensity.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {changeStatus1(5,bulbThreeIsLit,foco5)}
         })
         barraFocoCuatro.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -333,9 +308,7 @@ class LightsActivity : AppCompatActivity() {
                 intensidadFocoCuatro.text ="Intensidad: "+ foco6.iNtensity.toString()
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                //changeStatus1(6,bulbFourIsLit,foco6)
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {changeStatus1(6,bulbFourIsLit,foco6)}
         })
     }
 

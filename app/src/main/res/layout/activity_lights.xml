@@ -123,7 +123,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="30dp"
         android:id="@+id/layoutBulbOne"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
