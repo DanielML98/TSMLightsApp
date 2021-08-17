@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         when (view.id) {
             R.id.imageButtonFoco -> {
                 val intent = Intent(this, LightsActivity::class.java)
+
                 startActivity(intent)
             }
             R.id.imageButtonSOS -> {
