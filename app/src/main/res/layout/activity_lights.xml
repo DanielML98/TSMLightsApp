@@ -16,8 +16,7 @@
         android:gravity="center"
         android:textSize="30dp"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"/>
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,6 +26,104 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="30dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="40dp">
+
+            <ImageButton
+                android:id="@+id/imagePlug1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:text="@string/IBF1"
+                app:layout_constraintStart_toEndOf="@+id/imageButton2"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:contentDescription="@string/IBF1"
+                app:srcCompat="@drawable/tomacorrienteoff"
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
+
+            <TextView
+                android:id="@+id/textPlug1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contacto 1"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton1" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="60dp">
+
+            <ImageButton
+                android:id="@+id/imagePlug2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:scaleType="centerCrop"
+                android:text="@string/IBF1"
+                app:layout_constraintStart_toEndOf="@+id/imageButton2"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:contentDescription="@string/IBF1"
+                app:srcCompat="@drawable/tomacorrienteoff"
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
+
+            <TextView
+                android:id="@+id/textPlug2"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:text="Contacto 2"
+                app:layout_constraintStart_toEndOf="@+id/textView2"
+                app:layout_constraintTop_toBottomOf="@+id/imageButton1" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/plusButton"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:scaleType="centerCrop"
+                android:text="@string/IBF1"
+                app:layout_constraintStart_toEndOf="@+id/imageButton2"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:contentDescription="@string/IBF1"
+                app:srcCompat="@drawable/plus"
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/layoutBulbOne"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,7 +139,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView3"
                 android:contentDescription="@string/IBF1"
                 app:srcCompat="@drawable/offbulb"
-                android:onClick="buttonPressed"/>
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
 
             <TextView
                 android:id="@+id/textView1"
@@ -73,7 +171,36 @@
                 android:id="@+id/sBfocoUno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:min="0"
+                android:max="100"
+                android:progress="50"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="25dp">
+
+                <Button
+                    android:id="@+id/changeNameBtn1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/IBF7"
+                    android:contentDescription="@string/IBF7"
+                    android:textSize="7dp"
+                    android:onClick="buttonPressed"/>
+
+                <EditText
+                    android:id="@+id/editNameTxt1"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
+                    android:visibility="invisible"
+                    android:textSize="7dp"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -88,7 +215,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:id="@+id/layoutBulbTwo"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -103,7 +232,8 @@
                 android:contentDescription="@string/IBF2"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
                 app:srcCompat="@drawable/offbulb"
-                android:onClick="buttonPressed"/>
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
 
             <TextView
                 android:id="@+id/textView2"
@@ -135,7 +265,36 @@
                 android:id="@+id/sBfocoDos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:min="0"
+                android:max="100"
+                android:progress="50"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="25dp">
+
+                <Button
+                    android:id="@+id/changeNameBtn2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/IBF7"
+                    android:contentDescription="@string/IBF7"
+                    android:textSize="7dp"
+                    android:onClick="buttonPressed"/>
+
+                <EditText
+                    android:id="@+id/editNameTxt2"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
+                    android:visibility="invisible"
+                    android:textSize="7dp"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -149,7 +308,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:id="@+id/layoutBulbThre"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -164,7 +325,8 @@
                 android:text="@string/IBF3"
                 android:contentDescription="@string/IBF3"
                 app:srcCompat="@drawable/offbulb"
-                android:onClick="buttonPressed"/>
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
 
             <TextView
                 android:id="@+id/textView3"
@@ -195,7 +357,36 @@
                 android:id="@+id/sBfocoTres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:min="0"
+                android:max="100"
+                android:progress="50"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="25dp">
+
+                <Button
+                    android:id="@+id/changeNameBtn3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/IBF7"
+                    android:contentDescription="@string/IBF7"
+                    android:textSize="7dp"
+                    android:onClick="buttonPressed"/>
+
+                <EditText
+                    android:id="@+id/editNameTxt3"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
+                    android:visibility="invisible"
+                    android:textSize="7dp"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -209,7 +400,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:id="@+id/layoutBulbFour"
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -223,7 +416,8 @@
                 android:text="@string/IBF4"
                 android:contentDescription="@string/IBF4"
                 app:srcCompat="@drawable/offbulb"
-                android:onClick="buttonPressed"/>
+                android:onClick="buttonPressed"
+                android:background="@color/white"/>
 
             <TextView
                 android:id="@+id/textView4"
@@ -253,7 +447,36 @@
                 android:id="@+id/sBfocoCuatro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                android:min="0"
+                android:max="100"
+                android:progress="50"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="25dp">
+
+                <Button
+                    android:id="@+id/changeNameBtn4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/IBF7"
+                    android:contentDescription="@string/IBF7"
+                    android:textSize="7dp"
+                    android:onClick="buttonPressed"/>
+
+                <EditText
+                    android:id="@+id/editNameTxt4"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_width="170dp"
+                    android:layout_height="35dp"
+                    android:visibility="invisible"
+                    android:textSize="7dp"
+                    />
+
+            </LinearLayout>
 
 
         </LinearLayout>

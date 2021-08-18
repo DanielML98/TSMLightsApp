@@ -3,11 +3,16 @@
     <string name="IB">foco</string>
     <string name="IB2">SOS</string>
     <string name="IB3">Ubicación</string>
+    <string name="IB4">voice</string>
 
     <string name="IBF1">Sala</string>
     <string name="IBF2">Cocina</string>
     <string name="IBF3">Cuarto</string>
     <string name="IBF4">Baño</string>
+    <string name="IBF5">Patio</string>
+    <string name="IBF6">Entrada</string>
+    <string name="IBF7">Cambiar Nombre</string>
+    <string name="IBF8">Aceptar</string>
     <string name="db_error">Seems like there\'s an error, try again later</string>
 
 </resources>

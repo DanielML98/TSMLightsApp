@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
 import java.io.IOException
 import java.text.Normalizer
 import java.util.*
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         when (view.id) {
             R.id.imageButtonFoco -> {
                 val intent = Intent(this, LightsActivity::class.java)
+
                 startActivity(intent)
             }
             R.id.imageButtonSOS -> {
