@@ -183,6 +183,9 @@ class LightsActivity : AppCompatActivity() {
     }
 
 
+
+
+
     // This function changes label text to the returned string in the GET request to the url
     fun getFromUrl(url: String,label: ImageButton,id:Int){
 
