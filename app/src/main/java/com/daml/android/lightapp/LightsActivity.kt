@@ -16,6 +16,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import android.content.DialogInterface
 import java.nio.charset.Charset
 
 
@@ -48,6 +49,8 @@ class LightsActivity : AppCompatActivity() {
     var bulbFourIsLit = false
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lights)
@@ -64,6 +67,7 @@ class LightsActivity : AppCompatActivity() {
     fun buttonPressed (view: View) {
         when(view.id) {
             R.id.plusButton -> addingBulbs()
+            R.id.minusButton -> removingBulbs()
             R.id.changeNameBtn1 -> changingName(1)
             R.id.changeNameBtn2 -> changingName(2)
             R.id.changeNameBtn3 -> changingName(3)
@@ -78,53 +82,107 @@ class LightsActivity : AppCompatActivity() {
         }
     }
 
-    fun addingBulbs(){
-
-        var layout : LinearLayout = findViewById(R.id.layoutBulbOne)
-        var layout2 : LinearLayout = findViewById(R.id.layoutBulbTwo)
-        var layout3 : LinearLayout = findViewById(R.id.layoutBulbThre)
-        var layout4 : LinearLayout = findViewById(R.id.layoutBulbFour)
-        if(!layout.isVisible) {
-            layout.isVisible = true
-        }
-        else if(!layout2.isVisible) layout2.isVisible = true
-        else if(!layout3.isVisible) layout3.isVisible = true
-        else if(!layout4.isVisible) layout4.isVisible = true
-
+    fun removingBulbs(){
+        AlertDialog.Builder(this).apply{
+            setTitle("Eliminar Foco")
+            setMessage("¿Estás seguro de que quieres eliminar un foco?")
+            setPositiveButton("Si"){ _: DialogInterface, _: Int ->
+                var layout : LinearLayout = findViewById(R.id.layoutBulbOne)
+                var layout2 : LinearLayout = findViewById(R.id.layoutBulbTwo)
+                var layout3 : LinearLayout = findViewById(R.id.layoutBulbThre)
+                var layout4 : LinearLayout = findViewById(R.id.layoutBulbFour)
+                if(layout4.isVisible) {
+                layout4.isVisible = false
+                changeStatus(6, true, findViewById(R.id.imageButton4))
+                initialUpdateStatus()
+                }
+                else if(layout3.isVisible) {
+                    layout3.isVisible = false
+                    changeStatus(5, true, findViewById(R.id.imageButton3))
+                    initialUpdateStatus()
+                }
+                else if(layout2.isVisible) {
+                    layout2.isVisible = false
+                    changeStatus(4, true, findViewById(R.id.imageButton2))
+                    initialUpdateStatus()
+                }
+                else if(layout.isVisible) {
+                    layout.isVisible = false
+                    changeStatus(3, true, findViewById(R.id.imageButton1))
+                    initialUpdateStatus()
+                }
+            }
+            setNegativeButton("No",null)
+        }.show()
     }
+
+    fun addingBulbs(){
+        AlertDialog.Builder(this).apply{
+            setTitle("Agregar Foco")
+            setMessage("¿Estás seguro de que quieres agregar un foco?")
+            setPositiveButton("Si"){ _: DialogInterface, _: Int ->
+                var layout : LinearLayout = findViewById(R.id.layoutBulbOne)
+                var layout2 : LinearLayout = findViewById(R.id.layoutBulbTwo)
+                var layout3 : LinearLayout = findViewById(R.id.layoutBulbThre)
+                var layout4 : LinearLayout = findViewById(R.id.layoutBulbFour)
+                if(!layout.isVisible) {
+                    layout.isVisible = true
+                    changeStatus(3, false, findViewById(R.id.imageButton1))
+                    initialUpdateStatus()
+                }
+                else if(!layout2.isVisible) {
+                    layout2.isVisible = true
+                    changeStatus(4, false, findViewById(R.id.imageButton2))
+                    initialUpdateStatus()
+                }
+                else if(!layout3.isVisible) {
+                    layout3.isVisible = true
+                    changeStatus(5, false, findViewById(R.id.imageButton3))
+                    initialUpdateStatus()
+                }
+                else if(!layout4.isVisible) {
+                    layout4.isVisible = true
+                    changeStatus(6, false, findViewById(R.id.imageButton4))
+                    initialUpdateStatus()
+                }
+            }
+            setNegativeButton("No",null)
+        }.show()
+    }
+
     fun changingName(id: Int){
-        var boton : Button = findViewById(R.id.changeNameBtn1)
-        var editext : EditText = findViewById(R.id.editNameTxt1)
         var textBulb: TextView = findViewById(R.id.textView1)
-
-        when (id){
-            2 -> {
-                boton = findViewById(R.id.changeNameBtn2)
-                editext = findViewById(R.id.editNameTxt2)
-                textBulb = findViewById(R.id.textView2)
-            }
-            3 -> {
-                boton = findViewById(R.id.changeNameBtn3)
-                editext = findViewById(R.id.editNameTxt3)
-                textBulb = findViewById(R.id.textView3)
-            }
-            4 -> {
-                boton = findViewById(R.id.changeNameBtn4)
-                editext = findViewById(R.id.editNameTxt4)
-                textBulb = findViewById(R.id.textView4)
-            }
-        }
-
-        if(boton.text == "Cambiar Nombre"){
-            boton.setText("Cambiar")
-            editext.isVisible = true
-        }
-        else{
-            if(!editext.getText().isEmpty()){
-                boton.setText("Cambiar Nombre")
-                textBulb.text = editext.getText()
-                editext.isVisible = false
-            }
+        val dialog = AlertDialog.Builder (this)
+        val dialogView = layoutInflater.inflate(R.layout.changing_name,null)
+        val newName = dialogView.findViewById<EditText>(R.id.newName)
+        dialog.setView(dialogView)
+        dialog.setCancelable(false)
+        dialog.setPositiveButton("Cambiar") { _: DialogInterface, _: Int ->}
+        val customDialog = dialog.create()
+        customDialog.show()
+        customDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+            if (newName.text.isNotEmpty()) {
+                when (id){
+                    1 -> {
+                        textBulb = findViewById(R.id.textView1)
+                        textBulb.text = newName.text
+                    }
+                    2 -> {
+                        textBulb = findViewById(R.id.textView2)
+                        textBulb.text = newName.text
+                    }
+                    3 -> {
+                        textBulb = findViewById(R.id.textView3)
+                        textBulb.text = newName.text
+                    }
+                    4 -> {
+                        textBulb = findViewById(R.id.textView4)
+                        textBulb.text = newName.text
+                    }
+                }
+                customDialog.dismiss()
+            } else
+                Toast.makeText(baseContext, "Name not valid", Toast.LENGTH_SHORT).show()
         }
     }
 

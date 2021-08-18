@@ -31,8 +31,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginHorizontal="40dp">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="25dp">
 
+            <ImageButton
+                android:id="@+id/minusButton"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:text="@string/IBF1"
+                app:layout_constraintStart_toEndOf="@+id/imageButton2"
+                app:layout_constraintTop_toBottomOf="@+id/textView3"
+                android:contentDescription="@string/IBF1"
+                app:srcCompat="@drawable/minus"
+                android:onClick="buttonPressed"
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="30dp">
             <ImageButton
                 android:id="@+id/imagePlug1"
                 android:layout_width="70dp"
@@ -44,7 +70,8 @@
                 android:contentDescription="@string/IBF1"
                 app:srcCompat="@drawable/tomacorrienteoff"
                 android:onClick="buttonPressed"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground" />
 
             <TextView
                 android:id="@+id/textPlug1"
@@ -62,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginHorizontal="60dp">
+            android:layout_marginHorizontal="30dp">
 
             <ImageButton
                 android:id="@+id/imagePlug2"
@@ -75,11 +102,12 @@
                 android:contentDescription="@string/IBF1"
                 app:srcCompat="@drawable/tomacorrienteoff"
                 android:onClick="buttonPressed"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
             <TextView
                 android:id="@+id/textPlug2"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contacto 2"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
@@ -89,12 +117,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="25dp">
 
             <ImageButton
                 android:id="@+id/plusButton"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+
                 android:scaleType="centerCrop"
                 android:text="@string/IBF1"
                 app:layout_constraintStart_toEndOf="@+id/imageButton2"
@@ -102,7 +135,8 @@
                 android:contentDescription="@string/IBF1"
                 app:srcCompat="@drawable/plus"
                 android:onClick="buttonPressed"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:foreground="?android:attr/selectableItemBackground"/>
 
 
 
