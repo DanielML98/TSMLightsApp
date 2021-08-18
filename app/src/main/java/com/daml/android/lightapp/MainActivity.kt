@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity() {
                         flashLightL()
                     }
                     //Obtén ubicación y envía SMS
-                    //getLastLocation()
+                    getLastLocation()
                     //Si se denegó algún permiso
                 } else {
                     //Ve si el permiso de cámara se otorgó e intenta al menos prender la lámpara
